@@ -1,3 +1,2 @@
 # tower-defence-game
--
-PSP assessment for IBM
+- PSP assessment for IBM
