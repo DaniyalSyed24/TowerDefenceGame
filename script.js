@@ -24,8 +24,11 @@ var enemies;
 var ENEMY_SPEED = 1 / 10000;
 var CURRENT_WAVE = 1;
 var LIVES = 100;
-var waveStrength = 20; //default value
 var BULLET_DAMAGE = 50;
+
+var waveStrength = 10; //default value
+var enemiesLeft;       //amount of enemies left to spawn in the current wave
+var enemiesAlive = 0;      //enemies currently alive
 
 var map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,11 +42,18 @@ var map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 function preload() {
     this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
     this.load.image('bullet', 'assets/bullet.png');
+
+    generateWave();
 }
 
-//function calculateWaveStrength() {
-//    waveStrength = 10 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE+3) * waveStrength))
-//}
+function calculateWaveStrength() {
+    waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
+    console.log(waveStrength);
+}
+function generateWave() {
+    calculateWaveStrength();
+    enemiesLeft = waveStrength;
+}
 
 var Enemy = new Phaser.Class({
 
@@ -73,6 +83,7 @@ var Enemy = new Phaser.Class({
         if (this.hp <= 0) {
             this.setActive(false);
             this.setVisible(false);
+            enemiesAlive -= 1;
         }
     },
 
@@ -226,16 +237,28 @@ function drawLines(graphics) {
 
 function update(time, delta) {
 
-    if (time > this.nextEnemy && LIVES > 0) {
+    //create enemy
+    if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
         var enemy = enemies.get();
         if (enemy) {
+            enemiesLeft -= 1;
+            enemiesAlive += 1;
             enemy.setActive(true);
             enemy.setVisible(true);
             enemy.startOnPath();
 
+            console.log(enemiesLeft);
+
             //this.nextEnemy = time + 2000;
-            this.nextEnemy = time + 250;
+            this.nextEnemy = time + 1000;
+            //this.nextEnemy = time + 250;
         }
+    }
+
+    if (enemiesLeft <= 0 && enemiesAlive <= 0) {
+        CURRENT_WAVE += 1;
+        updateWavesCount();
+        generateWave();
     }
 }
 
@@ -274,4 +297,8 @@ function updateLivesCount() {
             }
         }
     }
+}
+
+function updateWavesCount() {
+    document.getElementById("WaveCount").innerHTML = CURRENT_WAVE;
 }
