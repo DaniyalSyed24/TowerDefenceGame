@@ -22,7 +22,9 @@ var turrets;
 var enemies;
 
 var ENEMY_SPEED = 1 / 10000;
-
+var CURRENT_WAVE = 1;
+var LIVES = 100;
+var waveStrength = 20; //default value
 var BULLET_DAMAGE = 50;
 
 var map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,12 +41,15 @@ function preload() {
     this.load.image('bullet', 'assets/bullet.png');
 }
 
+//function calculateWaveStrength() {
+//    waveStrength = 10 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE+3) * waveStrength))
+//}
+
 var Enemy = new Phaser.Class({
 
     Extends: Phaser.GameObjects.Image,
 
     initialize:
-
         function Enemy(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'enemy');
 
@@ -60,6 +65,7 @@ var Enemy = new Phaser.Class({
 
         this.setPosition(this.follower.vec.x, this.follower.vec.y);
     },
+
     receiveDamage: function (damage) {
         this.hp -= damage;
 
@@ -69,6 +75,7 @@ var Enemy = new Phaser.Class({
             this.setVisible(false);
         }
     },
+
     update: function (time, delta) {
         this.follower.t += ENEMY_SPEED * delta;
         path.getPoint(this.follower.t, this.follower.vec);
@@ -78,6 +85,8 @@ var Enemy = new Phaser.Class({
         if (this.follower.t >= 1) {
             this.setActive(false);
             this.setVisible(false);
+            LIVES -= 1;
+            updateLivesCount();
         }
     }
 
@@ -97,7 +106,6 @@ var Turret = new Phaser.Class({
     Extends: Phaser.GameObjects.Image,
 
     initialize:
-
         function Turret(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
             this.nextTic = 0;
@@ -128,7 +136,6 @@ var Bullet = new Phaser.Class({
     Extends: Phaser.GameObjects.Image,
 
     initialize:
-
         function Bullet(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
 
@@ -253,4 +260,8 @@ function addBullet(x, y, angle) {
     if (bullet) {
         bullet.fire(x, y, angle);
     }
+}
+
+function updateLivesCount() {
+    document.getElementById("LivesCount").innerHTML = LIVES;
 }
