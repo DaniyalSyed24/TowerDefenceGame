@@ -26,6 +26,8 @@ var CURRENT_WAVE = 1;
 var LIVES = 100;
 var BULLET_DAMAGE = 50;
 
+var CURRENCY = 200;
+
 var waveStrength = 10; //default value
 var enemiesLeft;       //amount of enemies left to spawn in the current wave
 var enemiesAlive = 0;      //enemies currently alive
@@ -65,6 +67,7 @@ var Enemy = new Phaser.Class({
 
             this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
             this.hp = 0;
+            this.reward = 10; //currency reward for destroying enemy
         },
 
     startOnPath: function () {
@@ -84,6 +87,8 @@ var Enemy = new Phaser.Class({
             this.setActive(false);
             this.setVisible(false);
             enemiesAlive -= 1;
+            CURRENCY += this.reward;
+            updateCurrency();
         }
     },
 
@@ -96,6 +101,7 @@ var Enemy = new Phaser.Class({
         if (this.follower.t >= 1) {
             LIVES -= 1;
             updateLivesCount();
+            enemiesAlive -= 1;
             this.setActive(false);
             this.setVisible(false);
         }
@@ -120,6 +126,7 @@ var Turret = new Phaser.Class({
         function Turret(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
             this.nextTic = 0;
+            this.cost = 100; //cost to place turret
         },
     place: function (i, j) {
         this.y = i * 64 + 64 / 2;
@@ -272,9 +279,17 @@ function placeTurret(pointer) {
     if (canPlaceTurret(i, j)) {
         var turret = turrets.get();
         if (turret) {
-            turret.setActive(true);
-            turret.setVisible(true);
-            turret.place(i, j);
+            if (CURRENCY >= turret.cost) {
+                turret.setActive(true);
+                turret.setVisible(true);
+                turret.place(i, j);
+                CURRENCY -= turret.cost
+                updateCurrency();
+            }
+            else { //this technically works but is really bad, has to be a better way to do this (towers stack on top left without this block)
+                turret.setActive(false);
+                turret.setVisible(false);
+            }
         }
     }
 }
@@ -299,6 +314,11 @@ function updateLivesCount() {
     }
 }
 
+//these two can be merged
 function updateWavesCount() {
     document.getElementById("WaveCount").innerHTML = CURRENT_WAVE;
+}
+
+function updateCurrency() {
+    document.getElementById("Currency").innerHTML = CURRENCY;
 }
