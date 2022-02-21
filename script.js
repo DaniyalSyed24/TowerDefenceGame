@@ -83,10 +83,10 @@ var Enemy = new Phaser.Class({
         this.setPosition(this.follower.vec.x, this.follower.vec.y);
 
         if (this.follower.t >= 1) {
-            this.setActive(false);
-            this.setVisible(false);
             LIVES -= 1;
             updateLivesCount();
+            this.setActive(false);
+            this.setVisible(false);
         }
     }
 
@@ -226,14 +226,15 @@ function drawLines(graphics) {
 
 function update(time, delta) {
 
-    if (time > this.nextEnemy) {
+    if (time > this.nextEnemy && LIVES > 0) {
         var enemy = enemies.get();
         if (enemy) {
             enemy.setActive(true);
             enemy.setVisible(true);
             enemy.startOnPath();
 
-            this.nextEnemy = time + 2000;
+            //this.nextEnemy = time + 2000;
+            this.nextEnemy = time + 250;
         }
     }
 }
@@ -264,4 +265,13 @@ function addBullet(x, y, angle) {
 
 function updateLivesCount() {
     document.getElementById("LivesCount").innerHTML = LIVES;
+    if (LIVES <= 0) {
+        var enemyUnits = enemies.getChildren();
+        for (var i = 0; i < enemyUnits.length; i++) {
+            if (enemyUnits[i].active) {
+                enemyUnits[i].setActive(false);
+                enemyUnits[i].setVisible(false);
+            }
+        }
+    }
 }
