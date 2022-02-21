@@ -1,9 +1,9 @@
-// JavaScript source code
-var config = {
+const config = {
     type: Phaser.AUTO,
-    parent: 'content',
-    width: 640,
-    height: 512,
+    parent: 'game',
+    width: window.innerWidth,
+    height: window.innerHeight,
+
     physics: {
         default: 'arcade'
     },
@@ -15,24 +15,24 @@ var config = {
     }
 };
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 
-var path;
-var turrets;
-var enemies;
+let path;
+let turrets;
+let enemies;
 
-var ENEMY_SPEED = 1 / 10000;
-var CURRENT_WAVE = 1;
-var LIVES = 100;
-var BULLET_DAMAGE = 50;
+let ENEMY_SPEED = 1 / 10000;
+let CURRENT_WAVE = 1;
+let LIVES = 100;
+let BULLET_DAMAGE = 50;
 
-var CURRENCY = 200;
+let CURRENCY = 200;
 
-var waveStrength = 10; //default value
-var enemiesLeft;       //amount of enemies left to spawn in the current wave
-var enemiesAlive = 0;      //enemies currently alive
+let waveStrength = 10; //default value
+let enemiesLeft;       //amount of enemies left to spawn in the current wave
+let enemiesAlive = 0;  //enemies currently alive
 
-var map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+let map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
@@ -42,8 +42,8 @@ var map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 function preload() {
-    this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
-    this.load.image('bullet', 'assets/bullet.png');
+    this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
+    this.load.image('bullet', 'assets/media/bullet.png');
 
     generateWave();
 }
@@ -57,7 +57,7 @@ function generateWave() {
     enemiesLeft = waveStrength;
 }
 
-var Enemy = new Phaser.Class({
+let Enemy = new Phaser.Class({
 
     Extends: Phaser.GameObjects.Image,
 
@@ -110,15 +110,15 @@ var Enemy = new Phaser.Class({
 });
 
 function getEnemy(x, y, distance) {
-    var enemyUnits = enemies.getChildren();
-    for (var i = 0; i < enemyUnits.length; i++) {
+    let enemyUnits = enemies.getChildren();
+    for (let i = 0; i < enemyUnits.length; i++) {
         if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
             return enemyUnits[i];
     }
     return false;
 }
 
-var Turret = new Phaser.Class({
+let Turret = new Phaser.Class({
 
     Extends: Phaser.GameObjects.Image,
 
@@ -134,9 +134,9 @@ var Turret = new Phaser.Class({
         map[i][j] = 1;
     },
     fire: function () {
-        var enemy = getEnemy(this.x, this.y, 200);
+        let enemy = getEnemy(this.x, this.y, 200);
         if (enemy) {
-            var angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
+            let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
             addBullet(this.x, this.y, angle);
             this.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG;
         }
@@ -149,7 +149,7 @@ var Turret = new Phaser.Class({
     }
 });
 
-var Bullet = new Phaser.Class({
+let Bullet = new Phaser.Class({
 
     Extends: Phaser.GameObjects.Image,
 
@@ -194,7 +194,7 @@ var Bullet = new Phaser.Class({
 });
 
 function create() {
-    var graphics = this.add.graphics();
+    let graphics = this.add.graphics();
     drawLines(graphics);
     path = this.add.path(96, -32);
     path.lineTo(96, 164);
@@ -231,11 +231,11 @@ function damageEnemy(enemy, bullet) {
 
 function drawLines(graphics) {
     graphics.lineStyle(1, 0x0000ff, 0.8);
-    for (var i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
         graphics.moveTo(0, i * 64);
         graphics.lineTo(640, i * 64);
     }
-    for (var j = 0; j < 10; j++) {
+    for (let j = 0; j < 10; j++) {
         graphics.moveTo(j * 64, 0);
         graphics.lineTo(j * 64, 512);
     }
@@ -246,7 +246,7 @@ function update(time, delta) {
 
     //create enemy
     if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
-        var enemy = enemies.get();
+        let enemy = enemies.get();
         if (enemy) {
             enemiesLeft -= 1;
             enemiesAlive += 1;
@@ -274,10 +274,10 @@ function canPlaceTurret(i, j) {
 }
 
 function placeTurret(pointer) {
-    var i = Math.floor(pointer.y / 64);
-    var j = Math.floor(pointer.x / 64);
+    let i = Math.floor(pointer.y / 64);
+    let j = Math.floor(pointer.x / 64);
     if (canPlaceTurret(i, j)) {
-        var turret = turrets.get();
+        let turret = turrets.get();
         if (turret) {
             if (CURRENCY >= turret.cost) {
                 turret.setActive(true);
@@ -295,7 +295,7 @@ function placeTurret(pointer) {
 }
 
 function addBullet(x, y, angle) {
-    var bullet = bullets.get();
+    let bullet = bullets.get();
     if (bullet) {
         bullet.fire(x, y, angle);
     }
@@ -304,8 +304,8 @@ function addBullet(x, y, angle) {
 function updateLivesCount() {
     document.getElementById("LivesCount").innerHTML = LIVES;
     if (LIVES <= 0) {
-        var enemyUnits = enemies.getChildren();
-        for (var i = 0; i < enemyUnits.length; i++) {
+        let enemyUnits = enemies.getChildren();
+        for (let i = 0; i < enemyUnits.length; i++) {
             if (enemyUnits[i].active) {
                 enemyUnits[i].setActive(false);
                 enemyUnits[i].setVisible(false);
@@ -322,3 +322,4 @@ function updateWavesCount() {
 function updateCurrency() {
     document.getElementById("Currency").innerHTML = CURRENCY;
 }
+
