@@ -347,20 +347,18 @@ class Instructions extends Phaser.Scene {
         super('instructions');
     }
 
-    create() {
-        this.add.image(400, 300, 'bg');
-        this.add.image(400, 430, 'grid').setDisplaySize(800, 376);
+    preload() {
+        this.load.image('bg', 'http://localhost/towerdefensealt/assets/media/sky1.png')
+    }
 
-        this.add.text(720, 0, 'S\n t\na\n c\nk\n e\nr', { fontFamily: 'bebas', fontSize: 74, color: '#ffffff', lineSpacing: -10 }).setShadow(2, 2, "#333333", 2, false, true);
+    create() {
+        
+        this.add.image(400, 300, 'bg');
 
         this.add.text(20, 40, 'Instructions', { fontFamily: 'bebas', fontSize: 70, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
 
         var help = [
-            'Build a tower all the way to the top of the screen',
-            'to win big "prizes"! Place rows of blocks on top',
-            'of each other, but be careful: it gets faster each',
-            'time, you lose blocks if you don\'t land perfectly,',
-            'and you automatically shrink after rows 5 and 10!'
+            'Place turrets to kill the enemies!'
         ];
 
         this.add.text(20, 180, help, { fontFamily: 'bebas', fontSize: 30, color: '#ffffff', lineSpacing: 6 }).setShadow(2, 2, "#333333", 2, false, true);
