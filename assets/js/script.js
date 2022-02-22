@@ -20,7 +20,7 @@ let map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+[0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
 var GameScene = new Phaser.Class({
@@ -94,11 +94,11 @@ var GameScene = new Phaser.Class({
         }
     },
 
-    calculateWaveStrength: function() {
+    calculateWaveStrength: function () {
         waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
         console.log(waveStrength);
     },
-    generateWave: function() {
+    generateWave: function () {
         this.calculateWaveStrength();
         enemiesLeft = waveStrength;
     },
@@ -137,7 +137,7 @@ var GameScene = new Phaser.Class({
                 this.setActive(false);
                 this.setVisible(false);
                 enemiesAlive -= 1;
-                
+
             }
         },
 
@@ -169,9 +169,12 @@ var GameScene = new Phaser.Class({
                 this.cost = 100; //cost to place turret
             },
         place: function (i, j) {
+            this.i = i;
+            this.j = j;
             this.y = i * 64 + 64 / 2;
             this.x = j * 64 + 64 / 2;
             map[i][j] = 1;
+            console.log(i, j);
         },
         getEnemy: function (x, y, distance) {
             let enemyUnits = enemies.getChildren();
@@ -182,7 +185,7 @@ var GameScene = new Phaser.Class({
             return false;
         },
         fire: function () {
-            
+
             let enemy = this.getEnemy(this.x, this.y, 200);
             if (enemy) {
                 let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
@@ -201,6 +204,13 @@ var GameScene = new Phaser.Class({
             if (bullet) {
                 bullet.fire(x, y, angle);
             }
+        },
+        sell: function (turret) {
+            map[turret.i][turret.j] = 0; //clear map square
+            CURRENCY += turret.cost / 2;
+            turret.scene.events.emit("updateCurrency");
+            turret.setActive(false);
+            turret.setVisible(false);
         }
     }),
 
@@ -248,8 +258,8 @@ var GameScene = new Phaser.Class({
 
     }),
 
-    damageEnemy: function(enemy, bullet) {
-    // only if both enemy and bullet are alive
+    damageEnemy: function (enemy, bullet) {
+        // only if both enemy and bullet are alive
         if (enemy.active === true && bullet.active === true) {
             // we remove the bullet right away
             bullet.setActive(false);
@@ -260,7 +270,7 @@ var GameScene = new Phaser.Class({
         }
     },
 
-    drawLines: function(graphics) {
+    drawLines: function (graphics) {
         graphics.lineStyle(1, 0x0000ff, 0.8);
         for (let i = 0; i < 8; i++) {
             graphics.moveTo(0, i * 64);
@@ -273,11 +283,11 @@ var GameScene = new Phaser.Class({
         graphics.strokePath();
     },
 
-    canPlaceTurret: function(i, j) {
+    canPlaceTurret: function (i, j) {
         return map[i][j] === 0;
     },
 
-    placeTurret: function(pointer) {
+    placeTurret: function (pointer) {
         let i = Math.floor(pointer.y / 64);
         let j = Math.floor(pointer.x / 64);
         //if (this.canPlaceTurret(i, j)) {
@@ -288,6 +298,11 @@ var GameScene = new Phaser.Class({
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+                    turret.setInteractive({
+                        useHandCursor: true
+                    });
+                    turret.on("pointerover", () => { console.log("hovered over turret"); });
+                    turret.on("pointerdown", () => { console.log(this); this.scene.events.emit("clickedTurret", turret) });
                     CURRENCY -= turret.cost
                     this.scene.events.emit("updateCurrency");
                 }
@@ -316,7 +331,29 @@ var UIScene = Phaser.Class({
         var livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
         var waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
 
+        //game over
         var gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+        gameOverText.setVisible(false);
+
+        //tower popup
+        var towerText = this.add.text(10, 500, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
+        var sellButton = this.add.text(10, 540, "Sell for ", { font: "24px Arial", fill: "#FF0000" });
+        //sellButton.setInteractive({
+        //    useHandCursor: true
+        //});
+        //sellButton.on("pointerup", () => { console.log("sell button pressed") })
+        var closeButton = this.add.text(300, 500, "Close", { font: "32px Arial", fill: "#FF0000" });
+        closeButton.setInteractive({
+            useHandCursor: true
+        });
+        closeButton.on("pointerup", () => {
+            towerText.setVisible(false);
+            sellButton.setVisible(false);
+            closeButton.setVisible(false);
+        })
+        towerText.setVisible(false);
+        sellButton.setVisible(false);
+        closeButton.setVisible(false);
 
         console.log(this);
         var game = this.scene.get("GameScene");
@@ -336,7 +373,23 @@ var UIScene = Phaser.Class({
         game.events.on("gameOver", function () {
             gameOverText.setText("GAME OVER");
             //add a restart button later
-        })
+        }, this)
+
+        game.events.on("clickedTurret", function (turret) {
+            towerText.setVisible(!towerText.visible);
+            sellButton.setText("Sell for " + turret.cost / 2 + " currency");
+            sellButton.setVisible(!sellButton.visible);
+            sellButton.setInteractive({
+                useHandCursor: true
+            });
+            sellButton.on("pointerup", () => {
+                turret.sell(turret);
+                towerText.setVisible(false);
+                sellButton.setVisible(false);
+                closeButton.setVisible(false);
+            });
+            closeButton.setVisible(!closeButton.visible);
+        }, this);
     }
 
 });
