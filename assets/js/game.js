@@ -341,39 +341,38 @@ var UIScene = Phaser.Class({
 
 });
 
-class Instructions extends Phaser.Scene {
-
-    constructor() {
-        super('instructions');
-    }
-
-    preload() {
-        this.load.image('bg', 'http://localhost/towerdefensealt/assets/media/sky1.png')
-    }
-
-    create() {
-        
-        this.add.image(400, 300, 'bg');
-
-        this.add.text(20, 40, 'Instructions', { fontFamily: 'bebas', fontSize: 70, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
-
-        var help = [
-            'Place turrets to kill the enemies!'
-        ];
-
-        this.add.text(20, 180, help, { fontFamily: 'bebas', fontSize: 30, color: '#ffffff', lineSpacing: 6 }).setShadow(2, 2, "#333333", 2, false, true);
-
-        this.add.text(20, 450, 'Space Bar or Click to Place a Row', { fontFamily: 'bebas', fontSize: 40, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
-
-        this.input.keyboard.once('keydown_SPACE', this.start, this);
-        this.input.once('pointerdown', this.start, this);
-    }
-
-    start() {
-        this.scene.start('GameScene', 'UIScene');
-    }
-
-}
+//class Instructions extends Phaser.Scene {
+//
+//    constructor() {
+//        super('instructions');
+//    }
+//
+//    preload() {
+//        this.load.image('bg', 'assets/media/sky1.png')
+//    }
+//
+//    create() {
+//
+//        this.add.image(400, 300, 'bg');
+//
+//        this.add.text(20, 40, 'Instructions', { fontFamily: 'bebas', fontSize: 70, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+//
+//        var help = [
+//            'Place turrets to kill the enemies!'
+//        ];
+//
+//        this.add.text(20, 180, help, { fontFamily: 'bebas', fontSize: 30, color: '#ffffff', lineSpacing: 6 }).setShadow(2, 2, "#333333", 2, false, true);
+//
+//        this.add.text(20, 450, 'Space Bar or Click to Place a Row', { fontFamily: 'bebas', fontSize: 40, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+//
+//        this.input.keyboard.once('keydown_SPACE', this.start, this);
+//        this.input.once('pointerdown', this.start, this);
+//    }
+//
+//    start() {
+//        this.scene.start('GameScene', 'UIScene');
+//    }
+//}
 
 
 const config = {
@@ -385,13 +384,7 @@ const config = {
     physics: {
         default: 'arcade'
     },
-    //scene: [{
-    //    key: 'main',
-    //    preload: preload,
-    //    create: create,
-    //    update: update
-    //}, UIScene]
-    scene: [Instructions, GameScene, UIScene]
+    scene: [instructionsScene, GameScene, UIScene]
 };
 
 const game = new Phaser.Game(config);
