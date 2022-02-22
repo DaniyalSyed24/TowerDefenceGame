@@ -2,7 +2,7 @@ let instructionsScene = Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function instructionsScene() {
-            Phaser.Scene.call(this, { key: "instructionsScene", active: true });
+            Phaser.Scene.call(this, { key: "instructionsScene", /*active: true*/});
         },
 
     preload: function() {
@@ -14,7 +14,7 @@ let instructionsScene = Phaser.Class({
 
         this.add.text(20, 40, 'Instructions', { fontFamily: 'bebas', fontSize: 70, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
 
-        var help = [
+        let help = [
             'Place turrets to kill the enemies!'
         ];
 
@@ -27,6 +27,6 @@ let instructionsScene = Phaser.Class({
     },
 
     start() {
-        this.scene.start('GameScene', 'UIScene');
+        this.scene.start('gameScene', 'UIScene');
     }
 });

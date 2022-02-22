@@ -2,7 +2,7 @@ let UIScene = Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function UIScene() {
-            Phaser.Scene.call(this, { key: "UIScene", active: true });
+            Phaser.Scene.call(this, { key: "UIScene"});
 
             //UI variables
             //this.currency = 200;

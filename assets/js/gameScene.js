@@ -13,29 +13,31 @@ let waveStrength = 10; //default value
 let enemiesLeft;       //amount of enemies left to spawn in the current wave
 let enemiesAlive = 0;  //enemies currently alive
 
-let map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
-var GameScene = new Phaser.Class({
+let gameScene = Phaser.Class({
     Extends: Phaser.Scene,
 
     initialize:
-        function GameScene() {
-            Phaser.Scene.call(this, { key: "GameScene" })
+        function gameScene() {
+            Phaser.Scene.call(this, { key: "gameScene"});
         },
-    preload: function () {
+
+    preload: function() {
         this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
         this.load.image('bullet', 'assets/media/bullet.png');
 
         this.generateWave();
     },
+    
     create: function () {
         let graphics = this.add.graphics();
         this.drawLines(graphics);
@@ -59,7 +61,8 @@ var GameScene = new Phaser.Class({
 
         this.input.on('pointerdown', this.placeTurret);
     },
-    update: function (time, delta) {
+
+    update: function(time, delta) {
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
             let enemy = enemies.get();
             if (enemy) {
@@ -103,7 +106,9 @@ var GameScene = new Phaser.Class({
         enemiesLeft = waveStrength;
     },
 
-    //objects
+
+    /* ---------- OBJECTS ----------*/
+
     Enemy: new Phaser.Class({
 
         Extends: Phaser.GameObjects.Image,
@@ -299,18 +304,3 @@ var GameScene = new Phaser.Class({
         }
     },
 });
-
-
-const config = {
-    type: Phaser.AUTO,
-    parent: 'game',
-    width: window.innerWidth,
-    height: window.innerHeight,
-
-    physics: {
-        default: 'arcade'
-    },
-    scene: [instructionsScene, GameScene, UIScene]
-};
-
-const game = new Phaser.Game(config);
