@@ -72,8 +72,8 @@ var GameScene = new Phaser.Class({
                 console.log(enemiesLeft);
 
                 //this.nextEnemy = time + 2000;
-                //this.nextEnemy = time + 1000;
-                this.nextEnemy = time + 250;
+                this.nextEnemy = time + 1000;
+                //this.nextEnemy = time + 250;
             }
         }
 
