@@ -10,14 +10,16 @@ let UIScene = Phaser.Class({
             //this.wave = 1;
         },
     create: function () {
-        var currencyInfo = this.add.text(500, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
-        var livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
-        var waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
+        console.log("test UI");
 
-        var gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+        let currencyInfo = this.add.text(500, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
+        let livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
+        let waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
+
+        let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
 
         console.log(this);
-        var game = this.scene.get("GameScene");
+        let game = this.scene.get("gameScene");
 
         game.events.on("updateCurrency", function () {
             currencyInfo.setText("Currency: " + CURRENCY);
