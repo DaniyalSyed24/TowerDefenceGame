@@ -1,22 +1,3 @@
-const config = {
-    type: Phaser.AUTO,
-    parent: 'game',
-    width: window.innerWidth,
-    height: window.innerHeight,
-
-    physics: {
-        default: 'arcade'
-    },
-    scene: {
-        key: 'main',
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
-
-const game = new Phaser.Game(config);
-
 let path;
 let turrets;
 let enemies;
@@ -39,287 +20,346 @@ let map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+    [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
-function preload() {
-    this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
-    this.load.image('bullet', 'assets/media/bullet.png');
 
-    generateWave();
-}
-
-function calculateWaveStrength() {
-    waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
-    console.log(waveStrength);
-}
-function generateWave() {
-    calculateWaveStrength();
-    enemiesLeft = waveStrength;
-}
-
-let Enemy = new Phaser.Class({
-
-    Extends: Phaser.GameObjects.Image,
+var GameScene = new Phaser.Class({
+    Extends: Phaser.Scene,
 
     initialize:
-        function Enemy(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'enemy');
-
-            this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
-            this.hp = 0;
-            this.reward = 10; //currency reward for destroying enemy
+        function GameScene() {
+            Phaser.Scene.call(this, { key: "GameScene" })
         },
+    preload: function () {
+        this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
+        this.load.image('bullet', 'assets/media/bullet.png');
 
-    startOnPath: function () {
-        this.follower.t = 0;
-        this.hp = 100;
-
-        path.getPoint(this.follower.t, this.follower.vec);
-
-        this.setPosition(this.follower.vec.x, this.follower.vec.y);
+        this.generateWave();
     },
+    create: function () {
+        let graphics = this.add.graphics();
+        this.drawLines(graphics);
+        path = this.add.path(96, -32);
+        path.lineTo(96, 164);
+        path.lineTo(480, 164);
+        path.lineTo(480, 544);
 
-    receiveDamage: function (damage) {
-        this.hp -= damage;
+        graphics.lineStyle(2, 0xffffff, 1);
+        path.draw(graphics);
 
-        // if hp drops below 0 we deactivate this enemy
-        if (this.hp <= 0) {
-            this.setActive(false);
-            this.setVisible(false);
-            enemiesAlive -= 1;
-            CURRENCY += this.reward;
-            updateCurrency();
-        }
-    },
+        enemies = this.physics.add.group({ classType: this.Enemy, runChildUpdate: true });
 
-    update: function (time, delta) {
-        this.follower.t += ENEMY_SPEED * delta;
-        path.getPoint(this.follower.t, this.follower.vec);
+        turrets = this.add.group({ classType: this.Turret, runChildUpdate: true });
 
-        this.setPosition(this.follower.vec.x, this.follower.vec.y);
+        bullets = this.physics.add.group({ classType: this.Bullet, runChildUpdate: true });
 
-        if (this.follower.t >= 1) {
-            LIVES -= 1;
-            updateLivesCount();
-            enemiesAlive -= 1;
-            this.setActive(false);
-            this.setVisible(false);
-        }
-    }
+        this.nextEnemy = 0;
 
-});
+        this.physics.add.overlap(enemies, bullets, this.damageEnemy);
 
-function getEnemy(x, y, distance) {
-    let enemyUnits = enemies.getChildren();
-    for (let i = 0; i < enemyUnits.length; i++) {
-        if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
-            return enemyUnits[i];
-    }
-    return false;
-}
-
-let Turret = new Phaser.Class({
-
-    Extends: Phaser.GameObjects.Image,
-
-    initialize:
-        function Turret(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
-            this.nextTic = 0;
-            this.cost = 100; //cost to place turret
-        },
-    place: function (i, j) {
-        this.y = i * 64 + 64 / 2;
-        this.x = j * 64 + 64 / 2;
-        map[i][j] = 1;
-    },
-    fire: function () {
-        let enemy = getEnemy(this.x, this.y, 200);
-        if (enemy) {
-            let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
-            addBullet(this.x, this.y, angle);
-            this.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG;
-        }
+        this.input.on('pointerdown', this.placeTurret);
     },
     update: function (time, delta) {
-        if (time > this.nextTic) {
-            this.fire();
-            this.nextTic = time + 1000;
+        if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
+            let enemy = enemies.get();
+            if (enemy) {
+                enemiesLeft -= 1;
+                enemiesAlive += 1;
+                enemy.setActive(true);
+                enemy.setVisible(true);
+                enemy.startOnPath();
+
+                console.log(enemiesLeft);
+
+                //this.nextEnemy = time + 2000;
+                this.nextEnemy = time + 1000;
+                //this.nextEnemy = time + 250;
+            }
         }
-    }
-});
 
-let Bullet = new Phaser.Class({
-
-    Extends: Phaser.GameObjects.Image,
-
-    initialize:
-        function Bullet(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
-
-            this.incX = 0;
-            this.incY = 0;
-            this.lifespan = 0;
-
-            this.speed = Phaser.Math.GetSpeed(600, 1);
-        },
-
-    fire: function (x, y, angle) {
-        this.setActive(true);
-        this.setVisible(true);
-        //  Bullets fire from the middle of the screen to the given x/y
-        this.setPosition(x, y);
-
-        //  we don't need to rotate the bullets as they are round
-        //    this.setRotation(angle);
-
-        this.dx = Math.cos(angle);
-        this.dy = Math.sin(angle);
-
-        this.lifespan = 1000;
+        if (enemiesLeft <= 0 && enemiesAlive <= 0) {
+            CURRENT_WAVE += 1;
+            this.events.emit("updateWave");
+            this.generateWave();
+        }
+        if (LIVES <= 0) {
+            let enemyUnits = enemies.getChildren();
+            for (let i = 0; i < enemyUnits.length; i++) {
+                if (enemyUnits[i].active) {
+                    enemyUnits[i].setActive(false);
+                    enemyUnits[i].setVisible(false);
+                }
+            }
+        }
     },
 
-    update: function (time, delta) {
-        this.lifespan -= delta;
+    calculateWaveStrength: function() {
+        waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
+        console.log(waveStrength);
+    },
+    generateWave: function() {
+        this.calculateWaveStrength();
+        enemiesLeft = waveStrength;
+    },
 
-        this.x += this.dx * (this.speed * delta);
-        this.y += this.dy * (this.speed * delta);
+    //objects
+    Enemy: new Phaser.Class({
 
-        if (this.lifespan <= 0) {
-            this.setActive(false);
-            this.setVisible(false);
+        Extends: Phaser.GameObjects.Image,
+
+        initialize:
+            function Enemy(scene) {
+                Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'enemy');
+
+                this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
+                this.hp = 0;
+                this.reward = 10; //currency reward for destroying enemy
+            },
+
+        startOnPath: function () {
+            this.follower.t = 0;
+            this.hp = 100;
+
+            path.getPoint(this.follower.t, this.follower.vec);
+
+            this.setPosition(this.follower.vec.x, this.follower.vec.y);
+        },
+
+        receiveDamage: function (damage) {
+            this.hp -= damage;
+
+            // if hp drops below 0 we deactivate this enemy
+            if (this.hp <= 0) {
+                CURRENCY += this.reward;
+                //updateCurrency();
+                this.scene.events.emit("updateCurrency");
+                //this.events.emit("updateCurrency");
+                this.setActive(false);
+                this.setVisible(false);
+                enemiesAlive -= 1;
+                
+            }
+        },
+
+        update: function (time, delta) {
+            this.follower.t += ENEMY_SPEED * delta;
+            path.getPoint(this.follower.t, this.follower.vec);
+
+            this.setPosition(this.follower.vec.x, this.follower.vec.y);
+
+            if (this.follower.t >= 1) {
+                LIVES -= 1;
+                this.scene.events.emit("updateLives");
+                enemiesAlive -= 1;
+                this.setActive(false);
+                this.setVisible(false);
+            }
         }
-    }
 
-});
+    }),
 
-function create() {
-    let graphics = this.add.graphics();
-    drawLines(graphics);
-    path = this.add.path(96, -32);
-    path.lineTo(96, 164);
-    path.lineTo(480, 164);
-    path.lineTo(480, 544);
+    //getEnemy: function(x, y, distance) {
+    //    let enemyUnits = enemies.getChildren();
+    //    for(let i = 0; i<enemyUnits.length; i++) {
+    //        if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
+    //            return enemyUnits[i];
+    //        }
+    //    return false;
+    //},
 
-    graphics.lineStyle(2, 0xffffff, 1);
-    path.draw(graphics);
+    Turret: new Phaser.Class({
 
-    enemies = this.physics.add.group({ classType: Enemy, runChildUpdate: true });
+        Extends: Phaser.GameObjects.Image,
 
-    turrets = this.add.group({ classType: Turret, runChildUpdate: true });
+        initialize:
+            function Turret(scene) {
+                Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
+                this.nextTic = 0;
+                this.cost = 100; //cost to place turret
+            },
+        place: function (i, j) {
+            this.y = i * 64 + 64 / 2;
+            this.x = j * 64 + 64 / 2;
+            map[i][j] = 1;
+        },
+        getEnemy: function (x, y, distance) {
+            let enemyUnits = enemies.getChildren();
+            for (let i = 0; i < enemyUnits.length; i++) {
+                if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
+                    return enemyUnits[i];
+            }
+            return false;
+        },
+        fire: function () {
+            
+            let enemy = this.getEnemy(this.x, this.y, 200);
+            if (enemy) {
+                let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
+                this.addBullet(this.x, this.y, angle);
+                this.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG;
+            }
+        },
+        update: function (time, delta) {
+            if (time > this.nextTic) {
+                this.fire();
+                this.nextTic = time + 1000;
+            }
+        },
+        addBullet: function (x, y, angle) {
+            let bullet = bullets.get();
+            if (bullet) {
+                bullet.fire(x, y, angle);
+            }
+        }
+    }),
 
-    bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    Bullet: new Phaser.Class({
 
-    this.nextEnemy = 0;
+        Extends: Phaser.GameObjects.Image,
 
-    this.physics.add.overlap(enemies, bullets, damageEnemy);
+        initialize:
+            function Bullet(scene) {
+                Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
 
-    this.input.on('pointerdown', placeTurret);
-}
+                this.incX = 0;
+                this.incY = 0;
+                this.lifespan = 0;
 
-function damageEnemy(enemy, bullet) {
+                this.speed = Phaser.Math.GetSpeed(600, 1);
+            },
+
+        fire: function (x, y, angle) {
+            this.setActive(true);
+            this.setVisible(true);
+            //  Bullets fire from the middle of the screen to the given x/y
+            this.setPosition(x, y);
+
+            //  we don't need to rotate the bullets as they are round
+            //    this.setRotation(angle);
+
+            this.dx = Math.cos(angle);
+            this.dy = Math.sin(angle);
+
+            this.lifespan = 1000;
+        },
+
+        update: function (time, delta) {
+            this.lifespan -= delta;
+
+            this.x += this.dx * (this.speed * delta);
+            this.y += this.dy * (this.speed * delta);
+
+            if (this.lifespan <= 0) {
+                this.setActive(false);
+                this.setVisible(false);
+            }
+        }
+
+    }),
+
+    damageEnemy: function(enemy, bullet) {
     // only if both enemy and bullet are alive
-    if (enemy.active === true && bullet.active === true) {
-        // we remove the bullet right away
-        bullet.setActive(false);
-        bullet.setVisible(false);
+        if (enemy.active === true && bullet.active === true) {
+            // we remove the bullet right away
+            bullet.setActive(false);
+            bullet.setVisible(false);
 
-        // decrease the enemy hp with BULLET_DAMAGE
-        enemy.receiveDamage(BULLET_DAMAGE);
-    }
-}
-
-function drawLines(graphics) {
-    graphics.lineStyle(1, 0x0000ff, 0.8);
-    for (let i = 0; i < 8; i++) {
-        graphics.moveTo(0, i * 64);
-        graphics.lineTo(640, i * 64);
-    }
-    for (let j = 0; j < 10; j++) {
-        graphics.moveTo(j * 64, 0);
-        graphics.lineTo(j * 64, 512);
-    }
-    graphics.strokePath();
-}
-
-function update(time, delta) {
-
-    //create enemy
-    if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
-        let enemy = enemies.get();
-        if (enemy) {
-            enemiesLeft -= 1;
-            enemiesAlive += 1;
-            enemy.setActive(true);
-            enemy.setVisible(true);
-            enemy.startOnPath();
-
-            console.log(enemiesLeft);
-
-            //this.nextEnemy = time + 2000;
-            this.nextEnemy = time + 1000;
-            //this.nextEnemy = time + 250;
+            // decrease the enemy hp with BULLET_DAMAGE
+            enemy.receiveDamage(BULLET_DAMAGE);
         }
-    }
+    },
 
-    if (enemiesLeft <= 0 && enemiesAlive <= 0) {
-        CURRENT_WAVE += 1;
-        updateWavesCount();
-        generateWave();
-    }
-}
+    drawLines: function(graphics) {
+        graphics.lineStyle(1, 0x0000ff, 0.8);
+        for (let i = 0; i < 8; i++) {
+            graphics.moveTo(0, i * 64);
+            graphics.lineTo(640, i * 64);
+        }
+        for (let j = 0; j < 10; j++) {
+            graphics.moveTo(j * 64, 0);
+            graphics.lineTo(j * 64, 512);
+        }
+        graphics.strokePath();
+    },
 
-function canPlaceTurret(i, j) {
-    return map[i][j] === 0;
-}
+    canPlaceTurret: function(i, j) {
+        return map[i][j] === 0;
+    },
 
-function placeTurret(pointer) {
-    let i = Math.floor(pointer.y / 64);
-    let j = Math.floor(pointer.x / 64);
-    if (canPlaceTurret(i, j)) {
-        let turret = turrets.get();
-        if (turret) {
-            if (CURRENCY >= turret.cost) {
-                turret.setActive(true);
-                turret.setVisible(true);
-                turret.place(i, j);
-                CURRENCY -= turret.cost
-                updateCurrency();
-            }
-            else { //this technically works but is really bad, has to be a better way to do this (towers stack on top left without this block)
-                turret.setActive(false);
-                turret.setVisible(false);
+    placeTurret: function(pointer) {
+        let i = Math.floor(pointer.y / 64);
+        let j = Math.floor(pointer.x / 64);
+        //if (this.canPlaceTurret(i, j)) {
+        if (map[i][j] === 0) {
+            let turret = turrets.get();
+            if (turret) {
+                if (CURRENCY >= turret.cost) {
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                    CURRENCY -= turret.cost
+                    this.scene.events.emit("updateCurrency");
+                }
+                else { //this technically works but is really bad, has to be a better way to do this (towers stack on top left without this block)
+                    turret.setActive(false);
+                    turret.setVisible(false);
+                }
             }
         }
+    },
+});
+
+var UIScene = Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+        function UIScene() {
+            Phaser.Scene.call(this, { key: "UIScene", active: true });
+
+            //UI variables
+            //this.currency = 200;
+            //this.lives = 100;
+            //this.wave = 1;
+        },
+    create: function () {
+        var currencyInfo = this.add.text(500, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
+        var livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
+        var waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
+
+        var game = this.scene.get("GameScene");
+
+        game.events.on("updateCurrency", function () {
+            currencyInfo.setText("Currency: " + CURRENCY);
+        }, this);
+
+        game.events.on("updateLives", function () {
+            livesInfo.setText("Lives: " + LIVES);
+        }, this);
+
+        game.events.on("updateWave", function () {
+            waveInfo.setText("Wave: " + CURRENT_WAVE);
+        }, this)
     }
-}
 
-function addBullet(x, y, angle) {
-    let bullet = bullets.get();
-    if (bullet) {
-        bullet.fire(x, y, angle);
-    }
-}
+});
 
-function updateLivesCount() {
-    document.getElementById("LivesCount").innerHTML = LIVES;
-    if (LIVES <= 0) {
-        let enemyUnits = enemies.getChildren();
-        for (let i = 0; i < enemyUnits.length; i++) {
-            if (enemyUnits[i].active) {
-                enemyUnits[i].setActive(false);
-                enemyUnits[i].setVisible(false);
-            }
-        }
-    }
-}
 
-//these two can be merged
-function updateWavesCount() {
-    document.getElementById("WaveCount").innerHTML = CURRENT_WAVE;
-}
 
-function updateCurrency() {
-    document.getElementById("Currency").innerHTML = CURRENCY;
-}
+const config = {
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: window.innerWidth,
+    height: window.innerHeight,
 
+    physics: {
+        default: 'arcade'
+    },
+    //scene: [{
+    //    key: 'main',
+    //    preload: preload,
+    //    create: create,
+    //    update: update
+    //}, UIScene]
+    scene: [GameScene, UIScene]
+};
+
+const game = new Phaser.Game(config);
