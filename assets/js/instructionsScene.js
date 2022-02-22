@@ -1,7 +1,7 @@
 let instructionsScene = Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
-        function nstructionsScene() {
+        function instructionsScene() {
             Phaser.Scene.call(this, { key: "instructionsScene", active: true });
         },
 
