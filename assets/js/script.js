@@ -1,9 +1,11 @@
+
 const config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: window.innerWidth,
-    height: window.innerHeight,
-
+    width: 1080,
+    height: 720,
+    // width: window.innerWidth,
+    // height: window.innerHeight,
     physics: {
         default: 'arcade'
     },
@@ -322,4 +324,3 @@ function updateWavesCount() {
 function updateCurrency() {
     document.getElementById("Currency").innerHTML = CURRENCY;
 }
-
