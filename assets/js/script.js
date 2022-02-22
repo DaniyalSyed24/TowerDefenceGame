@@ -72,8 +72,8 @@ var GameScene = new Phaser.Class({
                 console.log(enemiesLeft);
 
                 //this.nextEnemy = time + 2000;
-                this.nextEnemy = time + 1000;
-                //this.nextEnemy = time + 250;
+                //this.nextEnemy = time + 1000;
+                this.nextEnemy = time + 250;
             }
         }
 
@@ -90,6 +90,7 @@ var GameScene = new Phaser.Class({
                     enemyUnits[i].setVisible(false);
                 }
             }
+            this.events.emit("gameOver");
         }
     },
 
@@ -133,7 +134,6 @@ var GameScene = new Phaser.Class({
                 CURRENCY += this.reward;
                 //updateCurrency();
                 this.scene.events.emit("updateCurrency");
-                //this.events.emit("updateCurrency");
                 this.setActive(false);
                 this.setVisible(false);
                 enemiesAlive -= 1;
@@ -157,15 +157,6 @@ var GameScene = new Phaser.Class({
         }
 
     }),
-
-    //getEnemy: function(x, y, distance) {
-    //    let enemyUnits = enemies.getChildren();
-    //    for(let i = 0; i<enemyUnits.length; i++) {
-    //        if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
-    //            return enemyUnits[i];
-    //        }
-    //    return false;
-    //},
 
     Turret: new Phaser.Class({
 
@@ -325,6 +316,9 @@ var UIScene = Phaser.Class({
         var livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
         var waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
 
+        var gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+
+        console.log(this);
         var game = this.scene.get("GameScene");
 
         game.events.on("updateCurrency", function () {
@@ -338,6 +332,11 @@ var UIScene = Phaser.Class({
         game.events.on("updateWave", function () {
             waveInfo.setText("Wave: " + CURRENT_WAVE);
         }, this)
+
+        game.events.on("gameOver", function () {
+            gameOverText.setText("GAME OVER");
+            //add a restart button later
+        })
     }
 
 });
