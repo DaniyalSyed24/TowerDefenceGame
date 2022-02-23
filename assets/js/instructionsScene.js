@@ -22,13 +22,14 @@ let instructionsScene = Phaser.Class({
 
         this.add.text(20, 450, 'Space Bar or Click to Place a Row', { fontFamily: 'bebas', fontSize: 40, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
 
-        this.input.keyboard.once('keydown_SPACE', this.start, this);
-        this.input.once('pointerdown', this.start, this);
+        //this.input.keyboard.once('keydown_SPACE', this.start, this);
+        //this.input.once('pointerdown', this.start, this);
+        this.input.on('pointerdown', () => {this.scene.start('mainMenuScene')})
 
     },
 
-    start() {
-        this.scene.start('gameScene');
-        this.scene.start('UIScene');
-    },
+    // start() {
+    //     this.scene.start('gameScene');
+    //     this.scene.start('UIScene');
+    // },
 });

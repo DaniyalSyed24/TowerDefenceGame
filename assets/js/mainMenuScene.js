@@ -2,7 +2,7 @@ let mainMenuScene = Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function mainMenuScene() {
-            Phaser.Scene.call(this, { key: "nmainMenuSceneame"});
+            Phaser.Scene.call(this, { key: "mainMenuScene"});
         },
 
     preload: function() {
