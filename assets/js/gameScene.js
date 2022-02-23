@@ -8,12 +8,17 @@ let gameScene = Phaser.Class({
 
     preload: function () {
         this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
+        this.load.image('turret1', 'assets/media/turret1.png');
+        this.load.image('EnemyOrc', 'assets/media/small orc.png');
         this.load.image('bullet', 'assets/media/bullet.png');
+        this.load.image('gameBack', 'assets/media/level1-background.png');
 
         this.generateWave();
     },
 
     create: function () {
+
+        this.add.image(320,256,'gameBack');
 
         let graphics = this.add.graphics();
         this.drawLines(graphics);
