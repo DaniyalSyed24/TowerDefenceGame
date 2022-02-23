@@ -81,6 +81,14 @@ let UIScene = Phaser.Class({
         upgradeFireRate.setVisible(false);
         upgradeRange.setVisible(false);
 
+        //wave play button
+        var playText = this.add.text(500, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align:"center" });
+        playText.setVisible(true);
+        playText.setInteractive({ useHandCursor: true });
+        playText.on("pointerup", () => {
+            game.startWave();
+        })
+
         console.log(this);
         let game = this.scene.get("gameScene");
 
@@ -93,13 +101,19 @@ let UIScene = Phaser.Class({
         }, this);
 
         game.events.on("updateWave", function () {
+            playText.setVisible(true);
             waveInfo.setText("Wave: " + CURRENT_WAVE);
         }, this)
 
         game.events.on("gameOver", function () {
             gameOverText.setText("GAME OVER");
             //add a restart button later
+        }, this)
+
+        game.events.on("waveStarted", function () {
+            playText.setVisible(false);
         })
+
         game.events.on("clickedTurret", function (turret) {
             //towerText.setVisible(!towerText.visible);
 

@@ -17,8 +17,6 @@ let gameScene = Phaser.Class({
     },
 
     create: function () {
-        console.log("game created");
-
         this.add.image(320,256,'gameBack');
 
         let graphics = this.add.graphics();
@@ -46,7 +44,7 @@ let gameScene = Phaser.Class({
     },
 
     update: function (time, delta) {
-        if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
+        if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0 && this.waveStarted) {
             let enemy = enemies.get();
             if (enemy) {
                 enemiesLeft -= 1;
@@ -65,6 +63,7 @@ let gameScene = Phaser.Class({
 
         if (enemiesLeft <= 0 && enemiesAlive <= 0) {
             CURRENT_WAVE += 1;
+            this.waveStarted = false;
             this.events.emit("updateWave");
             this.generateWave();
         }
@@ -87,6 +86,13 @@ let gameScene = Phaser.Class({
     generateWave: function () {
         this.calculateWaveStrength();
         enemiesLeft = waveStrength;
+    },
+
+    waveStarted: false,
+
+    startWave: function () {
+        this.waveStarted = true;
+        this.events.emit("waveStarted");
     },
 
 
