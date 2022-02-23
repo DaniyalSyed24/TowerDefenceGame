@@ -21,7 +21,7 @@ let mainMenuScene = Phaser.Class({
 
         let playText = this.add.text(screenCenterX, 250, "Play Game", {font: optionsFont}).setOrigin(0.5);
         playText.setInteractive();
-        playText.on('pointerdown', () => { this.scene.start('gameScene') });
+        playText.on('pointerdown', () => { this.scene.start('gameScene'); this.scene.start("UIScene") });
 
         let loginText = this.add.text(screenCenterX, 300, "Log In", {font: optionsFont}).setOrigin(0.5);
         loginText;

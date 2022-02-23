@@ -23,7 +23,7 @@ let instructionsScene = Phaser.Class({
 
         //this.input.keyboard.once('keydown_SPACE', this.start, this);
         //this.input.once('pointerdown', this.start, this);
-        this.input.on('pointerdown', () => {this.scene.start('mainMenuScene')})
+        this.input.on('pointerdown', () => { this.scene.start('mainMenuScene')})
     }
 
     // start() {

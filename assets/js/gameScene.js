@@ -17,6 +17,7 @@ let gameScene = Phaser.Class({
     },
 
     create: function () {
+        console.log("game created");
 
         this.add.image(320,256,'gameBack');
 
@@ -54,7 +55,7 @@ let gameScene = Phaser.Class({
                 enemy.setVisible(true);
                 enemy.startOnPath();
 
-                console.log(enemiesLeft);
+                //console.log(enemiesLeft);
 
                 //this.nextEnemy = time + 2000;
                 this.nextEnemy = time + 1000;
