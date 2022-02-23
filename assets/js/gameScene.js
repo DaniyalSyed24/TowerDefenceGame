@@ -3,16 +3,16 @@ let gameScene = Phaser.Class({
 
     initialize:
         function gameScene() {
-            Phaser.Scene.call(this, { key: "gameScene"});
+            Phaser.Scene.call(this, { key: "gameScene" });
         },
 
-    preload: function() {
+    preload: function () {
         this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
         this.load.image('bullet', 'assets/media/bullet.png');
 
         this.generateWave();
     },
-    
+
     create: function () {
 
         let graphics = this.add.graphics();
@@ -39,7 +39,7 @@ let gameScene = Phaser.Class({
 
     },
 
-    update: function(time, delta) {
+    update: function (time, delta) {
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
             let enemy = enemies.get();
             if (enemy) {
@@ -128,6 +128,12 @@ let gameScene = Phaser.Class({
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+                    turret.setInteractive({
+                        useHandCursor: true
+                    });
+                    //turret.on("pointerover", () => { console.log("hovered over turret"); turretHover = true; });
+                    //turret.on("pointerout", () => { console.log("left turret"); turretHover = false; })
+                    turret.on("pointerdown", () => { this.scene.events.emit("clickedTurret", turret) });
                     CURRENCY -= turret.cost
                     this.scene.events.emit("updateCurrency");
                 }
@@ -137,5 +143,5 @@ let gameScene = Phaser.Class({
                 }
             }
         }
-    },
+    }
 });
