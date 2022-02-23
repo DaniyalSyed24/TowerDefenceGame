@@ -4,7 +4,8 @@ let Enemy = new Phaser.Class({
 
     initialize:
         function Enemy(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'enemy');
+            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'EnemyOrc');    
+
 
             this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
             this.hp = 0;
@@ -54,7 +55,7 @@ let Turret = new Phaser.Class({
 
     initialize:
         function Turret(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
+            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'turret1');
             this.nextTic = 0;
             this.cost = 100; //cost to place turret
 
