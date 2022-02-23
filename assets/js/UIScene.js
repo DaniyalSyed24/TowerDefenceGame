@@ -12,9 +12,9 @@ let UIScene = Phaser.Class({
     create: function () {
         console.log("test UI");
 
-        let currencyInfo = this.add.text(500, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
-        let livesInfo = this.add.text(500, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
-        let waveInfo = this.add.text(500, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
+        let currencyInfo = this.add.text(475, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
+        let livesInfo = this.add.text(475, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
+        let waveInfo = this.add.text(475, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
 
         let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
 

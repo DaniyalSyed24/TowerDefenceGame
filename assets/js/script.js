@@ -26,8 +26,8 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 const config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 1080,
-    height: 720,
+    width: 640,
+    height: 512,
     // width: window.innerWidth,
     // height: window.innerHeight,
 
