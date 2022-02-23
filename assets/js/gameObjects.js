@@ -45,8 +45,7 @@ let Enemy = new Phaser.Class({
             this.setActive(false);
             this.setVisible(false);
         }
-    }
-
+    },
 })
 
 let Turret = new Phaser.Class({
@@ -58,8 +57,19 @@ let Turret = new Phaser.Class({
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'sprites', 'turret');
             this.nextTic = 0;
             this.cost = 100; //cost to place turret
+
+            //upgrades
+            this.fireRate = 1000; //higher number means SLOWER firing rate
+            this.range = 200;
+            //this.bulletDamage;
+
+            //upgrade costs;
+            this.fireRateCost = 50;
+            this.rangeCost = 50;
         },
     place: function (i, j) {
+        this.i = i;
+        this.j = j;
         this.y = i * 64 + 64 / 2;
         this.x = j * 64 + 64 / 2;
         map[i][j] = 1;
@@ -74,7 +84,7 @@ let Turret = new Phaser.Class({
     },
     fire: function () {
 
-        let enemy = this.getEnemy(this.x, this.y, 200);
+        let enemy = this.getEnemy(this.x, this.y, this.range);
         if (enemy) {
             let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
             this.addBullet(this.x, this.y, angle);
@@ -84,7 +94,7 @@ let Turret = new Phaser.Class({
     update: function (time, delta) {
         if (time > this.nextTic) {
             this.fire();
-            this.nextTic = time + 1000;
+            this.nextTic = time + this.fireRate;
         }
     },
     addBullet: function (x, y, angle) {
@@ -92,7 +102,43 @@ let Turret = new Phaser.Class({
         if (bullet) {
             bullet.fire(x, y, angle);
         }
+    },
+    sell: function (turret) {
+        map[turret.i][turret.j] = 0; //clear map square
+        CURRENCY += turret.cost / 2;
+
+        turret.scene.events.emit("updateCurrency");
+        //clear upgrades/reset costs
+        turret.fireRate = 1000;
+        turret.range = 200;
+        turret.cost = 100;
+        turret.fireRateCost = 50;
+        turret.rangeCost = 50;
+
+        turret.setActive(false);
+        turret.setVisible(false);
+    },
+    upgradeFiringRate: function (turret) {
+        //console.log(turret.fireRate);
+        //console.log(turret);
+        if (CURRENCY >= turret.fireRateCost && !(turret.fireRate <= 400)) {
+            CURRENCY -= turret.fireRateCost;
+            this.scene.events.emit("updateCurrency");
+            turret.fireRate -= 150;
+            turret.fireRateCost = Math.round(75 + (turret.fireRateCost * 1.5));
+            turret.cost += Math.round(turret.fireRateCost / 4);
+        }
+    },
+    upgradeRange: function (turret) {
+        if (CURRENCY >= turret.rangeCost && !(turret.range >= 500)) {
+            CURRENCY -= turret.rangeCost;
+            this.scene.events.emit("updateCurrency");
+            turret.range += 100;
+            turret.rangeCost = Math.round(50 + (turret.rangeCost * 2.5));
+            turret.cost += Math.round(turret.rangeCost / 4);
+        }
     }
+
 })
 
 let Bullet = new Phaser.Class({
