@@ -30,5 +30,4 @@ let mainMenuScene = Phaser.Class({
         instructionsText.setInteractive();
         instructionsText.on('pointerdown', () => {this.scene.start('instructionsScene')});
     },
-
 });
