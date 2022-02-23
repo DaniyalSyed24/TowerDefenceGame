@@ -20,7 +20,7 @@ let map = [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+    [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
 var GameScene = new Phaser.Class({
@@ -58,6 +58,7 @@ var GameScene = new Phaser.Class({
         this.physics.add.overlap(enemies, bullets, this.damageEnemy);
 
         this.input.on('pointerdown', this.placeTurret);
+        //this.input.on("pointerdown", this.handleClick);
     },
     update: function (time, delta) {
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
@@ -69,7 +70,7 @@ var GameScene = new Phaser.Class({
                 enemy.setVisible(true);
                 enemy.startOnPath();
 
-                console.log(enemiesLeft);
+                //console.log(enemiesLeft);
 
                 //this.nextEnemy = time + 2000;
                 this.nextEnemy = time + 1000;
@@ -93,6 +94,12 @@ var GameScene = new Phaser.Class({
             this.events.emit("gameOver");
         }
     },
+
+    //handleClick: function () {
+    //    if (!this.turretHover) {
+    //        this.scene.events.emit("clickedOffTurret");
+    //    }
+    //},
 
     calculateWaveStrength: function () {
         waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
@@ -158,6 +165,8 @@ var GameScene = new Phaser.Class({
 
     }),
 
+    turretHover: false,
+
     Turret: new Phaser.Class({
 
         Extends: Phaser.GameObjects.Image,
@@ -178,6 +187,8 @@ var GameScene = new Phaser.Class({
                 this.rangeCost = 50;
             },
         place: function (i, j) {
+            this.i = i;
+            this.j = j;
             this.y = i * 64 + 64 / 2;
             this.x = j * 64 + 64 / 2;
             map[i][j] = 1;
@@ -214,22 +225,38 @@ var GameScene = new Phaser.Class({
         sell: function (turret) {
             map[turret.i][turret.j] = 0; //clear map square
             CURRENCY += turret.cost / 2;
+
             turret.scene.events.emit("updateCurrency");
+            //clear upgrades/reset costs
+            turret.fireRate = 1000;
+            turret.range = 200;
+            turret.cost = 100;
+            turret.fireRateCost = 50;
+            turret.rangeCost = 50;
+
             turret.setActive(false);
             turret.setVisible(false);
         },
         upgradeFiringRate: function (turret) {
-            console.log(turret.fireRate);
-            console.log(turret);
+            //console.log(turret.fireRate);
+            //console.log(turret);
             if (CURRENCY >= turret.fireRateCost && !(turret.fireRate <= 400)) {
                 CURRENCY -= turret.fireRateCost;
                 this.scene.events.emit("updateCurrency");
                 turret.fireRate -= 150;
-                turret.fireRateCost = 75 + (turret.fireRateCost * 1.5);
-                turret.cost += turret.fireRateCost / 4;
+                turret.fireRateCost = Math.round(75 + (turret.fireRateCost * 1.5));
+                turret.cost += Math.round(turret.fireRateCost / 4);
             }
-
         },
+        upgradeRange: function (turret) {
+            if (CURRENCY >= turret.rangeCost && !(turret.range >= 500)) {
+                CURRENCY -= turret.rangeCost;
+                this.scene.events.emit("updateCurrency");
+                turret.range += 100;
+                turret.rangeCost = Math.round(50 + (turret.rangeCost * 2.5));
+                turret.cost += Math.round(turret.rangeCost / 4);
+            }
+        }
 
     }),
 
@@ -320,8 +347,9 @@ var GameScene = new Phaser.Class({
                     turret.setInteractive({
                         useHandCursor: true
                     });
-                    turret.on("pointerover", () => { console.log("hovered over " + turret); });
-                    turret.on("pointerdown", () => { console.log(this); this.scene.events.emit("clickedTurret", turret) });
+                    //turret.on("pointerover", () => { console.log("hovered over turret"); turretHover = true; });
+                    //turret.on("pointerout", () => { console.log("left turret"); turretHover = false; })
+                    turret.on("pointerdown", () => { this.scene.events.emit("clickedTurret", turret) });
                     CURRENCY -= turret.cost
                     this.scene.events.emit("updateCurrency");
                 }
@@ -332,6 +360,8 @@ var GameScene = new Phaser.Class({
             }
         }
     },
+
+    
 });
 
 var UIScene = Phaser.Class({
@@ -353,11 +383,51 @@ var UIScene = Phaser.Class({
         var gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
 
         //tower popup
+        var selectedTurret;
         var towerText = this.add.text(10, 500, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
         var sellButton = this.add.text(10, 540, "Sell for ", { font: "24px Arial", fill: "#FF0000" });
         var closeButton = this.add.text(300, 500, "Close", { font: "32px Arial", fill: "#FF0000" });
         var upgradeFireRate = this.add.text(10, 580, "Upgrade FIRING RATE for ", { font: "24px Arial", fill: "#0000FF" });
         var upgradeRange = this.add.text(10, 620, "Upgrade TURRET RANGE for ", { font: "24px Arial", fill: "#0000FF" });
+
+        sellButton.setInteractive({
+            useHandCursor: true
+        });
+        sellButton.on("pointerup", () => {
+            selectedTurret.sell(selectedTurret);
+            towerText.setVisible(false);
+            sellButton.setVisible(false);
+            closeButton.setVisible(false);
+            upgradeFireRate.setVisible(false);
+            upgradeRange.setVisible(false);
+        });
+
+        upgradeFireRate.setInteractive({ useHandCursor: true });
+        upgradeFireRate.on("pointerup", () => {
+            selectedTurret.upgradeFiringRate(selectedTurret);
+            if (selectedTurret.fireRate <= 400) {
+                upgradeFireRate.setText("FIRING RATE MAXED");
+                upgradeFireRate.setInteractive(false);
+            }
+            else {
+                upgradeFireRate.setText("Upgrade FIRING RATE for " + selectedTurret.fireRateCost + " currency");
+            }
+            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+        });
+
+        upgradeRange.setInteractive({ useHandCursor: true });
+        upgradeRange.on("pointerup", () => {
+            selectedTurret.upgradeRange(selectedTurret);
+            if (selectedTurret.range >= 500) {
+                upgradeRange.setText("RANGE MAXED");
+                upgradeRange.setInteractive(false);
+            }
+            else {
+                upgradeRange.setText("Upgrade RANGE for " + selectedTurret.rangeCost + " currency");
+            }
+            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+        })
+
         closeButton.setInteractive({
             useHandCursor: true
         });
@@ -395,41 +465,31 @@ var UIScene = Phaser.Class({
         }, this)
 
         game.events.on("clickedTurret", function (turret) {
-            towerText.setVisible(!towerText.visible);
+            //towerText.setVisible(!towerText.visible);
+
+            //console.log("clicked turret at " + turret.i + ", " + turret.j);
+
+            selectedTurret = turret;
+            //console.log(selectedTurret);
+
+            towerText.setVisible(true);
+            sellButton.setVisible(true);
+            closeButton.setVisible(true);
+            upgradeFireRate.setVisible(true);
+            upgradeRange.setVisible(true);
             sellButton.setText("Sell for " + turret.cost / 2 + " currency");
-            sellButton.setVisible(!sellButton.visible);
-            sellButton.setInteractive({
-                useHandCursor: true
-            });
-            sellButton.on("pointerup", () => {
-                turret.sell(turret);
-                towerText.setVisible(false);
-                sellButton.setVisible(false);
-                closeButton.setVisible(false);
-                upgradeFireRate.setVisible(false);
-                upgradeRange.setVisible(false);
-            });
-            closeButton.setVisible(!closeButton.visible);
 
-            upgradeFireRate.setText("Upgrade FIRING RATE for " + turret.fireRateCost + " currency");
-            upgradeFireRate.setInteractive({ useHandCursor: true });
-            upgradeFireRate.on("pointerup", () => {
-                turret.upgradeFiringRate(turret);
-                if (turret.fireRate <= 400) {
-                    upgradeFireRate.setText("FIRING RATE MAXED");
-                    upgradeFireRate.setInteractive(false);
-                }
-                else {
-                    upgradeFireRate.setText("Upgrade FIRING RATE for " + turret.fireRateCost + " currency");
-
-                }
-            });
-
+            if (turret.fireRate <= 400) {
+                upgradeFireRate.setText("FIRING RATE MAXED")
+            }
+            else {
+                upgradeFireRate.setText("Upgrade FIRING RATE for " + turret.fireRateCost + " currency");
+            }
+            
             upgradeRange.setText("Upgrade TURRET RANGE for " + turret.rangeCost + " currency");
 
-
-            upgradeFireRate.setVisible(!upgradeFireRate.visible);
-            upgradeRange.setVisible(!upgradeRange.visible);
+            //upgradeFireRate.setVisible(!upgradeFireRate.visible);
+            //upgradeRange.setVisible(!upgradeRange.visible);
         }, this);
     }
 
