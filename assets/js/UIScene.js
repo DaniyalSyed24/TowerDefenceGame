@@ -16,7 +16,17 @@ let UIScene = Phaser.Class({
         let livesInfo = this.add.text(475, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
         let waveInfo = this.add.text(475, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
 
+        //game over screen
         let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+        gameOverText.setVisible(false);
+        let retryButton = this.add.text(210, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF" });
+        retryButton.setVisible(false);
+        retryButton.setInteractive({ useHandCursor: true });
+        retryButton.on("pointerup", () => {
+            game.reset();
+            gameOverText.setVisible(false);
+            retryButton.setVisible(false);
+        })
 
         //tower popup
         var selectedTurret;
@@ -106,8 +116,9 @@ let UIScene = Phaser.Class({
         }, this)
 
         game.events.on("gameOver", function () {
+            gameOverText.setVisible(true);
+            retryButton.setVisible(true);
             gameOverText.setText("GAME OVER");
-            //add a restart button later
         }, this)
 
         game.events.on("waveStarted", function () {

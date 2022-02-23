@@ -95,6 +95,31 @@ let gameScene = Phaser.Class({
         this.events.emit("waveStarted");
     },
 
+    reset: function () {
+        let turretUnits = turrets.getChildren();
+        for (let t = 0; t < turretUnits.length; t++) {
+            console.log(t);
+            map[turretUnits[t].i][turretUnits[t].j] = 0;
+            turretUnits[t].fireRate = 1000;
+            turretUnits[t].range = 200;
+            turretUnits[t].cost = 100;
+            turretUnits[t].fireRateCost = 50;
+            turretUnits[t].rangeCost = 50;
+
+            turretUnits[t].setActive(false);
+            turretUnits[t].setVisible(false);
+        }
+        CURRENCY = 200;
+        LIVES = 100;
+        CURRENT_WAVE = 1;
+
+        this.waveStarted = false;
+
+        this.events.emit("updateCurrency");
+        this.events.emit("updateLives");
+        this.events.emit("updateWave");
+    },
+
 
     /* ---------- OBJECTS ----------*/
 
