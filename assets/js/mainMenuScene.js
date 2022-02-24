@@ -6,7 +6,7 @@ let mainMenuScene = Phaser.Class({
         },
 
     preload: function() {
-        this.load.image('menu-background', 'assets/media/main-menu-background.jpg');
+        this.load.image('menu-background', 'assets/media/menuBackground.jpg');
     },
     
     create: function () {
@@ -17,9 +17,10 @@ let mainMenuScene = Phaser.Class({
         backgroundImage.displayWidth = this.sys.canvas.width;
         backgroundImage.displayHeight = 800;
 
-        const title = "Orcs & Cannons";
-        const textColor= '#FFE77AFF';
-        const brownColor= '#4A2619';
+        const title = "Tower Defence Game";
+        // const textColor= '#FFE77AFF';
+        const textColor = 'white';
+        const buttonBackgroundColor = '#363636'
         const goldColor = '#F39C12';
         
         let titleText = this.add.text(screenCenterX, 120, title, {fontSize: "60px Calibri",fill: textColor}).setOrigin(0.5);
@@ -30,12 +31,12 @@ let mainMenuScene = Phaser.Class({
                 const button = scene.add.text(x, y, label)
                     .setOrigin(0.5)
                     .setPadding(paddingWidth, paddingHeight)
-                    .setStyle({ backgroundColor: brownColor, fontSize: '25px', })
-                    .setColor(textColor)
+                    .setStyle({ backgroundColor: buttonBackgroundColor, fontSize: '25px', })
+                    .setColor('white')
                     .setInteractive({ useHandCursor: true })
                     .on('pointerdown', () => callback())
-                    .on('pointerover', () => button.setStyle({ fill: brownColor, backgroundColor: goldColor}))
-                    .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: brownColor}));
+                    .on('pointerover', () => button.setStyle({ fill: textColor, backgroundColor: goldColor}))
+                    .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor}));
             }
         }
 
