@@ -9,6 +9,7 @@ let gameScene = Phaser.Class({
     preload: function () {
         this.load.atlas('sprites', 'assets/media/spritesheet.png', 'assets/media/spritesheet.json');
         this.load.atlas('turretSprites', 'assets/media/turrets.png', 'assets/media/turretsheet.json');
+        this.load.atlas('bulletSprites', 'assets/media/bulletsheet.png', 'assets/media/bulletsprites.json')
         this.load.image('EnemyOrc', 'assets/media/small orc.png');
         this.load.image('bullet', 'assets/media/bullet.png');
         this.load.image('gameBack', 'assets/media/level1-background.png');
@@ -29,7 +30,7 @@ let gameScene = Phaser.Class({
         path.lineTo(480, 544);
 
         graphics.lineStyle(2, 0xffffff, 1);
-        path.draw(graphics);
+        /*path.draw(graphics);*/
 
         enemies = this.physics.add.group({ classType: this.Enemy, runChildUpdate: true });
 
@@ -108,6 +109,7 @@ let gameScene = Phaser.Class({
 
     drawLines: function (graphics) {
         graphics.lineStyle(1, 0x0000ff, 0.8);
+        graphics.setAlpha(0.4);
         for (let i = 0; i < 8; i++) {
             graphics.moveTo(0, i * 64);
             graphics.lineTo(640, i * 64);

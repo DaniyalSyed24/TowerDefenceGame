@@ -91,7 +91,7 @@ let Turret = new Phaser.Class({
         let enemy = this.getEnemy(this.x, this.y, this.range);
         if (enemy) {
             let angle = Phaser.Math.Angle.Between(this.x, this.y, enemy.x, enemy.y);
-            this.addBullet(this.x, this.y, angle);
+            this.addBullet(this.x, this.y, angle, this.type);
             this.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG;
         }
     },
@@ -101,9 +101,10 @@ let Turret = new Phaser.Class({
             this.nextTic = time + this.fireRate;
         }
     },
-    addBullet: function (x, y, angle) {
+    addBullet: function (x, y, angle, type) {
         let bullet = bullets.get();
         if (bullet) {
+            bullet.setTexture('bulletSprites', type);
             bullet.fire(x, y, angle);
         }
     },
@@ -126,7 +127,9 @@ let Turret = new Phaser.Class({
         //console.log(turret.fireRate);
         //console.log(turret);
         if (CURRENCY >= turret.fireRateCost && !(turret.fireRate <= 400)) {
-            turret.version += 1;
+            if (turret.version < 4) {
+                turret.version += 1;
+            }
             let turretStart = "turrett";
             let turretType = turret.type.toString();
             let turretMid = "v";
@@ -144,7 +147,9 @@ let Turret = new Phaser.Class({
     upgradeRange: function (turret) {
         
         if (CURRENCY >= turret.rangeCost && !(turret.range >= 500)) {
-            turret.type += 1;
+            if (turret.type < 4) {
+                turret.type += 1;
+            }          
             let turretStart = "turrett";
             let turretType = turret.type.toString();
             let turretMid = "v";
@@ -178,13 +183,11 @@ let Bullet = new Phaser.Class({
         },
 
     fire: function (x, y, angle) {
-        this.setActive(true);
+        this.setActive(true); 
         this.setVisible(true);
         //  Bullets fire from the middle of the screen to the given x/y
         this.setPosition(x, y);
-
-        //  we don't need to rotate the bullets as they are round
-        //    this.setRotation(angle);
+        this.setRotation(angle);
 
         this.dx = Math.cos(angle);
         this.dy = Math.sin(angle);
