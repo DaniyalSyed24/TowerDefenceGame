@@ -174,7 +174,12 @@ let UIScene = Phaser.Class({
                 upgradeFireRate.setText("Upgrade FIRING RATE for " + turret.fireRateCost + " currency");
             }
 
-            upgradeRange.setText("Upgrade TURRET RANGE for " + turret.rangeCost + " currency");
+            if (turret.range >= 500) {
+                upgradeRange.setText("RANGE MAXED");
+            }
+            else {
+                upgradeRange.setText("Upgrade TURRET RANGE for " + turret.rangeCost + " currency");
+            }
 
             //upgradeFireRate.setVisible(!upgradeFireRate.visible);
             //upgradeRange.setVisible(!upgradeRange.visible);
