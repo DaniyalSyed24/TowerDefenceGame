@@ -59,6 +59,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(false);
             upgradeFireRate.setVisible(false);
             upgradeRange.setVisible(false);
+            turretOutline.setVisible(false);
         });
 
         upgradeFireRate.setInteractive({ useHandCursor: true });
@@ -96,6 +97,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(false);
             upgradeFireRate.setVisible(false);
             upgradeRange.setVisible(false);
+            turretOutline.setVisible(false);
         })
 
         towerText.setVisible(false);
@@ -111,6 +113,10 @@ let UIScene = Phaser.Class({
         playText.on("pointerup", () => {
             game.startWave();
         })
+
+        //turret outline
+        var turretOutline = this.add.rectangle(0, 0, 64, 64, 0xFFFFFF, 0.4);
+        turretOutline.setVisible(false);
 
         console.log(this);
         let game = this.scene.get("gameScene");
@@ -146,6 +152,12 @@ let UIScene = Phaser.Class({
 
             console.log(turret);
             selectedTurret = turret;
+
+            //outline turret
+            turretOutline.setPosition(selectedTurret.x, selectedTurret.y);
+            turretOutline.setVisible(true);
+            
+
             //console.log(selectedTurret);
 
             towerText.setVisible(true);
