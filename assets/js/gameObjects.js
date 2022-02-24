@@ -55,7 +55,7 @@ let Turret = new Phaser.Class({
 
     initialize:
         function Turret(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'turret1');
+            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'turretSprites', 'turrett1v1');
             this.nextTic = 0;
             this.cost = 100; //cost to place turret
 
@@ -63,6 +63,9 @@ let Turret = new Phaser.Class({
             this.fireRate = 1000; //higher number means SLOWER firing rate
             this.range = 200;
             //this.bulletDamage;
+
+            this.type = 1;
+            this.version = 1;
 
             //upgrade costs;
             this.fireRateCost = 50;
@@ -123,14 +126,28 @@ let Turret = new Phaser.Class({
         //console.log(turret.fireRate);
         //console.log(turret);
         if (CURRENCY >= turret.fireRateCost && !(turret.fireRate <= 400)) {
+            turret.version += 1;
+            let turretStart = "turrett";
+            let turretType = turret.type.toString();
+            let turretMid = "v";
+            let turretVer = turret.version.toString();
+            let newTurret = turretStart.concat(turretType, turretMid, turretVer);
             CURRENCY -= turret.fireRateCost;
             this.scene.events.emit("updateCurrency");
             turret.fireRate -= 150;
             turret.fireRateCost = Math.round(75 + (turret.fireRateCost * 1.5));
-            turret.cost += Math.round(turret.fireRateCost / 4);
+            turret.cost += Math.round(turret.fireRateCost / 4);       
+            console.log(newTurret);
+            turret.setTexture('turretSprites', newTurret);
         }
     },
     upgradeRange: function (turret) {
+        turret.type += 1;
+        let turretStart = "turrett";
+        let turretType = turret.type.toString();
+        let turretMid = "v";
+        let turretVer = turret.version.toString();
+        let newTurret = turretStart.concat(turretType, turretMid, turretVer);
         if (CURRENCY >= turret.rangeCost && !(turret.range >= 500)) {
             CURRENCY -= turret.rangeCost;
             this.scene.events.emit("updateCurrency");
@@ -138,6 +155,7 @@ let Turret = new Phaser.Class({
             turret.rangeCost = Math.round(50 + (turret.rangeCost * 2.5));
             turret.cost += Math.round(turret.rangeCost / 4);
         }
+        turret.setTexture('turretSprites', newTurret);
     }
 
 })

@@ -20,11 +20,11 @@ let UIScene = Phaser.Class({
 
         //tower popup
         var selectedTurret;
-        var towerText = this.add.text(10, 500, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
-        var sellButton = this.add.text(10, 540, "Sell for ", { font: "24px Arial", fill: "#FF0000" });
-        var closeButton = this.add.text(300, 500, "Close", { font: "32px Arial", fill: "#FF0000" });
-        var upgradeFireRate = this.add.text(10, 570, "Upgrade FIRING RATE for ", { font: "24px Arial", fill: "#0000FF" });
-        var upgradeRange = this.add.text(10, 600, "Upgrade TURRET RANGE for ", { font: "24px Arial", fill: "#0000FF" });
+        var towerText = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
+        var sellButton = this.add.text(10, 550, "Sell for ", { font: "24px Arial", fill: "#FF0000" });
+        var closeButton = this.add.text(300, 510, "Close", { font: "32px Arial", fill: "#FF0000" });
+        var upgradeFireRate = this.add.text(10, 580, "Upgrade FIRING RATE for ", { font: "24px Arial", fill: "#0000FF" });
+        var upgradeRange = this.add.text(10, 610, "Upgrade TURRET RANGE for ", { font: "24px Arial", fill: "#0000FF" });
 
         sellButton.setInteractive({
             useHandCursor: true
