@@ -20,7 +20,25 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+    [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+
+const buttonBackgroundColor = '#363636'
+const textColor = 'white';
+const goldColor = '#F39C12';
+
+class Button {
+    constructor(x, y, label, scene, callback, paddingWidth, paddingHeight) {
+        const button = scene.add.text(x, y, label)
+            .setOrigin(0.5)
+            .setPadding(paddingWidth, paddingHeight)
+            .setStyle({ backgroundColor: buttonBackgroundColor, fontSize: '25px', })
+            .setColor('white')
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => callback())
+            .on('pointerover', () => button.setStyle({ fill: textColor, backgroundColor: goldColor }))
+            .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor }));
+    }
+}
 
 
 const config = {

@@ -16,10 +16,7 @@ let instructionsScene = Phaser.Class({
         backgroundImage = this.add.image(320, 256, 'instructions-background');
         backgroundImage.displayWidth = this.sys.canvas.width;
 
-        const title = "Instructions"
-        const textColor = 'white';
-        const buttonBackgroundColor = '#363636'
-        const goldColor = '#F39C12';
+        const title = "Instructions";
 
         let titleText = this.add.text(screenCenterX, 120, title, {fontSize: "60px", fill: 'white'}).setOrigin(0.5);
         titleText.setShadow(2, 2, "#333333", 2, false, true);
@@ -33,19 +30,6 @@ let instructionsScene = Phaser.Class({
         let instructionsText = this.add.text(80, 250, instructions, {fontSize: 20});
         instructionsText.setColor(textColor);
 
-        class Button {
-            constructor(x, y, label, scene, callback, paddingWidth, paddingHeight) {
-                const button = scene.add.text(x, y, label)
-                    .setOrigin(0.5)
-                    .setPadding(paddingWidth, paddingHeight)
-                    .setStyle({ backgroundColor: buttonBackgroundColor, fontSize: '25px', })
-                    .setColor('white')
-                    .setInteractive({ useHandCursor: true })
-                    .on('pointerdown', () => callback())
-                    .on('pointerover', () => button.setStyle({ fill: textColor, backgroundColor: goldColor}))
-                    .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor}));
-            }
-        }
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => { this.scene.start('mainMenuScene')}, 50, 10);
         returnButton;
     }
