@@ -12,8 +12,6 @@ let gameScene = Phaser.Class({
         this.load.image('EnemyOrc', 'assets/media/small orc.png');
         this.load.image('bullet', 'assets/media/bullet.png');
         this.load.image('gameBack', 'assets/media/level1-background.png');
-
-        this.generateWave();
     },
 
     create: function () {
@@ -41,6 +39,7 @@ let gameScene = Phaser.Class({
 
         this.input.on('pointerdown', this.placeTurret);
 
+        this.generateWave();
     },
 
     update: function (time, delta) {
@@ -112,6 +111,8 @@ let gameScene = Phaser.Class({
         CURRENCY = 200;
         LIVES = 100;
         CURRENT_WAVE = 1;
+        waveStrength = 10;
+        this.generateWave();
 
         this.waveStarted = false;
 
