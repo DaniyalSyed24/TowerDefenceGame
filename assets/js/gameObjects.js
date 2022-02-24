@@ -142,20 +142,22 @@ let Turret = new Phaser.Class({
         }
     },
     upgradeRange: function (turret) {
-        turret.type += 1;
-        let turretStart = "turrett";
-        let turretType = turret.type.toString();
-        let turretMid = "v";
-        let turretVer = turret.version.toString();
-        let newTurret = turretStart.concat(turretType, turretMid, turretVer);
+        
         if (CURRENCY >= turret.rangeCost && !(turret.range >= 500)) {
+            turret.type += 1;
+            let turretStart = "turrett";
+            let turretType = turret.type.toString();
+            let turretMid = "v";
+            let turretVer = turret.version.toString();
+            let newTurret = turretStart.concat(turretType, turretMid, turretVer);
             CURRENCY -= turret.rangeCost;
             this.scene.events.emit("updateCurrency");
             turret.range += 100;
             turret.rangeCost = Math.round(50 + (turret.rangeCost * 2.5));
             turret.cost += Math.round(turret.rangeCost / 4);
+            turret.setTexture('turretSprites', newTurret);
         }
-        turret.setTexture('turretSprites', newTurret);
+        
     }
 
 })
