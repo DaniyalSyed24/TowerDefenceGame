@@ -12,13 +12,9 @@ let gameScene = Phaser.Class({
         this.load.image('EnemyOrc', 'assets/media/small orc.png');
         this.load.image('bullet', 'assets/media/bullet.png');
         this.load.image('gameBack', 'assets/media/level1-background.png');
-
-        this.generateWave();
     },
 
     create: function () {
-        console.log("game created");
-
         this.add.image(320,256,'gameBack');
 
         let graphics = this.add.graphics();
@@ -43,10 +39,11 @@ let gameScene = Phaser.Class({
 
         this.input.on('pointerdown', this.placeTurret);
 
+        this.generateWave();
     },
 
     update: function (time, delta) {
-        if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0) {
+        if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0 && this.waveStarted) {
             let enemy = enemies.get();
             if (enemy) {
                 enemiesLeft -= 1;
@@ -65,6 +62,7 @@ let gameScene = Phaser.Class({
 
         if (enemiesLeft <= 0 && enemiesAlive <= 0) {
             CURRENT_WAVE += 1;
+            this.waveStarted = false;
             this.events.emit("updateWave");
             this.generateWave();
         }
@@ -87,6 +85,40 @@ let gameScene = Phaser.Class({
     generateWave: function () {
         this.calculateWaveStrength();
         enemiesLeft = waveStrength;
+    },
+
+    waveStarted: false,
+
+    startWave: function () {
+        this.waveStarted = true;
+        this.events.emit("waveStarted");
+    },
+
+    reset: function () {
+        let turretUnits = turrets.getChildren();
+        for (let t = 0; t < turretUnits.length; t++) {
+            console.log(t);
+            map[turretUnits[t].i][turretUnits[t].j] = 0;
+            turretUnits[t].fireRate = 1000;
+            turretUnits[t].range = 200;
+            turretUnits[t].cost = 100;
+            turretUnits[t].fireRateCost = 50;
+            turretUnits[t].rangeCost = 50;
+
+            turretUnits[t].setActive(false);
+            turretUnits[t].setVisible(false);
+        }
+        CURRENCY = 200;
+        LIVES = 100;
+        CURRENT_WAVE = 1;
+        waveStrength = 10;
+        this.generateWave();
+
+        this.waveStarted = false;
+
+        this.events.emit("updateCurrency");
+        this.events.emit("updateLives");
+        this.events.emit("updateWave");
     },
 
 

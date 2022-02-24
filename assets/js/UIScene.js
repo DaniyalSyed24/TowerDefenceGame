@@ -16,7 +16,30 @@ let UIScene = Phaser.Class({
         let livesInfo = this.add.text(475, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
         let waveInfo = this.add.text(475, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
 
+        //game over screen
         let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+        gameOverText.setVisible(false);
+        let retryButton = this.add.text(210, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF" });
+        retryButton.setVisible(false);
+        retryButton.setInteractive({ useHandCursor: true });
+        retryButton.on("pointerup", () => {
+            game.reset();
+            gameOverText.setVisible(false);
+            retryButton.setVisible(false);
+            titleScreenButton.setVisible(false);
+        })
+        let titleScreenButton = this.add.text(300, 220, "Title Screen", { font: "24px Arial", fill: "#FFFFFF" });
+        titleScreenButton.setVisible(false);
+        titleScreenButton.setInteractive({ useHandCursor: true });
+        titleScreenButton.on("pointerup", () => {
+            //gameOverText.setVisible(false);
+            //retryButton.setVisible(false);
+            //titleScreenButton.setVisible(false);
+            //game.reset();
+            //game.scene.stop("gameScene");
+            //this.scene.start("mainMenuScene");
+            console.log("to title screen");
+        }, this);
 
         //tower popup
         var selectedTurret;
@@ -36,6 +59,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(false);
             upgradeFireRate.setVisible(false);
             upgradeRange.setVisible(false);
+            turretOutline.setVisible(false);
         });
 
         upgradeFireRate.setInteractive({ useHandCursor: true });
@@ -48,7 +72,7 @@ let UIScene = Phaser.Class({
             else {
                 upgradeFireRate.setText("Upgrade FIRING RATE for " + selectedTurret.fireRateCost + " currency");
             }
-            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(selectedTurret.cost / 2) + " currency");
         });
 
         upgradeRange.setInteractive({ useHandCursor: true });
@@ -61,7 +85,7 @@ let UIScene = Phaser.Class({
             else {
                 upgradeRange.setText("Upgrade RANGE for " + selectedTurret.rangeCost + " currency");
             }
-            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(selectedTurret.cost / 2) + " currency");
         })
 
         closeButton.setInteractive({
@@ -73,6 +97,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(false);
             upgradeFireRate.setVisible(false);
             upgradeRange.setVisible(false);
+            turretOutline.setVisible(false);
         })
 
         towerText.setVisible(false);
@@ -80,6 +105,18 @@ let UIScene = Phaser.Class({
         closeButton.setVisible(false);
         upgradeFireRate.setVisible(false);
         upgradeRange.setVisible(false);
+
+        //wave play button
+        var playText = this.add.text(500, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align:"center" });
+        playText.setVisible(true);
+        playText.setInteractive({ useHandCursor: true });
+        playText.on("pointerup", () => {
+            game.startWave();
+        })
+
+        //turret outline
+        var turretOutline = this.add.rectangle(0, 0, 64, 64, 0xFFFFFF, 0.4);
+        turretOutline.setVisible(false);
 
         console.log(this);
         let game = this.scene.get("gameScene");
@@ -93,13 +130,21 @@ let UIScene = Phaser.Class({
         }, this);
 
         game.events.on("updateWave", function () {
+            playText.setVisible(true);
             waveInfo.setText("Wave: " + CURRENT_WAVE);
         }, this)
 
         game.events.on("gameOver", function () {
+            gameOverText.setVisible(true);
+            retryButton.setVisible(true);
+            titleScreenButton.setVisible(true);
             gameOverText.setText("GAME OVER");
-            //add a restart button later
+        }, this)
+
+        game.events.on("waveStarted", function () {
+            playText.setVisible(false);
         })
+
         game.events.on("clickedTurret", function (turret) {
             //towerText.setVisible(!towerText.visible);
 
@@ -107,6 +152,12 @@ let UIScene = Phaser.Class({
 
             console.log(turret);
             selectedTurret = turret;
+
+            //outline turret
+            turretOutline.setPosition(selectedTurret.x, selectedTurret.y);
+            turretOutline.setVisible(true);
+            
+
             //console.log(selectedTurret);
 
             towerText.setVisible(true);
@@ -114,7 +165,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(true);
             upgradeFireRate.setVisible(true);
             upgradeRange.setVisible(true);
-            sellButton.setText("Sell for " + turret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(turret.cost / 2) + " currency");
 
             if (turret.fireRate <= 400) {
                 upgradeFireRate.setText("FIRING RATE MAXED")

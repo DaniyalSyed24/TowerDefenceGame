@@ -106,7 +106,7 @@ let Turret = new Phaser.Class({
     },
     sell: function (turret) {
         map[turret.i][turret.j] = 0; //clear map square
-        CURRENCY += turret.cost / 2;
+        CURRENCY += Math.round(turret.cost / 2);
 
         turret.scene.events.emit("updateCurrency");
         //clear upgrades/reset costs
