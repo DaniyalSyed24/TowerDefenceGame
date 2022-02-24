@@ -58,7 +58,7 @@ let UIScene = Phaser.Class({
             else {
                 upgradeFireRate.setText("Upgrade FIRING RATE for " + selectedTurret.fireRateCost + " currency");
             }
-            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(selectedTurret.cost / 2) + " currency");
         });
 
         upgradeRange.setInteractive({ useHandCursor: true });
@@ -71,7 +71,7 @@ let UIScene = Phaser.Class({
             else {
                 upgradeRange.setText("Upgrade RANGE for " + selectedTurret.rangeCost + " currency");
             }
-            sellButton.setText("Sell for " + selectedTurret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(selectedTurret.cost / 2) + " currency");
         })
 
         closeButton.setInteractive({
@@ -139,7 +139,7 @@ let UIScene = Phaser.Class({
             closeButton.setVisible(true);
             upgradeFireRate.setVisible(true);
             upgradeRange.setVisible(true);
-            sellButton.setText("Sell for " + turret.cost / 2 + " currency");
+            sellButton.setText("Sell for " + Math.round(turret.cost / 2) + " currency");
 
             if (turret.fireRate <= 400) {
                 upgradeFireRate.setText("FIRING RATE MAXED")
