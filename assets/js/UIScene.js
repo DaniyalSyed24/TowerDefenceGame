@@ -26,7 +26,20 @@ let UIScene = Phaser.Class({
             game.reset();
             gameOverText.setVisible(false);
             retryButton.setVisible(false);
+            titleScreenButton.setVisible(false);
         })
+        let titleScreenButton = this.add.text(300, 220, "Title Screen", { font: "24px Arial", fill: "#FFFFFF" });
+        titleScreenButton.setVisible(false);
+        titleScreenButton.setInteractive({ useHandCursor: true });
+        titleScreenButton.on("pointerup", () => {
+            //gameOverText.setVisible(false);
+            //retryButton.setVisible(false);
+            //titleScreenButton.setVisible(false);
+            //game.reset();
+            //game.scene.stop("gameScene");
+            //this.scene.start("mainMenuScene");
+            console.log("to title screen");
+        }, this);
 
         //tower popup
         var selectedTurret;
@@ -118,6 +131,7 @@ let UIScene = Phaser.Class({
         game.events.on("gameOver", function () {
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
+            titleScreenButton.setVisible(true);
             gameOverText.setText("GAME OVER");
         }, this)
 
