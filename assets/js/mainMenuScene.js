@@ -18,7 +18,6 @@ let mainMenuScene = Phaser.Class({
         // backgroundImage.displayHeight = 800;
 
         const title = "Tower Game";
-        // const textColor= '#FFE77AFF';
         const textColor = 'white';
         const buttonBackgroundColor = '#363636'
         const goldColor = '#F39C12';

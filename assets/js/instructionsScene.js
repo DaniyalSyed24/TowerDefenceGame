@@ -30,7 +30,6 @@ let instructionsScene = Phaser.Class({
             '- lorem\n'
         ];
 
-
         let instructionsText = this.add.text(80, 250, instructions, {fontSize: 20});
         instructionsText.setColor(textColor);
 
@@ -47,9 +46,7 @@ let instructionsScene = Phaser.Class({
                     .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor}));
             }
         }
-
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => { this.scene.start('mainMenuScene')}, 50, 10);
         returnButton;
     }
-
 });
