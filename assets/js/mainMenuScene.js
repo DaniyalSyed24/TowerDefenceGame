@@ -19,7 +19,7 @@ let mainMenuScene = Phaser.Class({
 
         const title = "Tower Game";
         
-        let titleText = this.add.text(screenCenterX, 120, title, {fontSize: "60px",fill: textColor}).setOrigin(0.5);
+        let titleText = this.add.text(screenCenterX, 120, title, {fontSize: "60px",fill: "white"}).setOrigin(0.5);
         titleText.setShadow(2, 2, "#333333", 2, false, true);
 
         

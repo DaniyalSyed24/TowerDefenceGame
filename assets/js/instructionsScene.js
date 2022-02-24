@@ -28,7 +28,7 @@ let instructionsScene = Phaser.Class({
         ];
 
         let instructionsText = this.add.text(80, 250, instructions, {fontSize: 20});
-        instructionsText.setColor(textColor);
+        instructionsText.setColor("white");
 
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => { this.scene.start('mainMenuScene')}, 50, 10);
         returnButton;
