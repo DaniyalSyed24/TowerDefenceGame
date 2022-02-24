@@ -23,7 +23,7 @@ let mainMenuScene = Phaser.Class({
         }, 50, 10);
 
         let buttonLogIn = new Button(screenCenterX, 375, 'Log In', this,() => {
-            console.log('clicked on login')
+            this.scene.start('loginScene');
         }, 72, 10);
 
         let buttonInstructions = new Button(screenCenterX, 450, 'Instructions', this, () => {

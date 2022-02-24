@@ -7,7 +7,6 @@ let instructionsScene = Phaser.Class({
 
     preload: function() {
         this.load.image('instructions-background', 'assets/media/menuBackground.jpg')
-        mainMenuScene;
     },
     
     create: function () {
