@@ -6,28 +6,47 @@ let instructionsScene = Phaser.Class({
         },
 
     preload: function() {
-        this.load.image('bg', 'assets/media/sky1.png')
+        this.load.image('instructions-background', 'assets/media/menuBackground.jpg')
+        mainMenuScene;
     },
     
     create: function () {
-        this.add.image(400, 300, 'bg');
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
-        this.add.text(20, 40, 'Instructions', { fontFamily: 'bebas', fontSize: 70, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+        backgroundImage = this.add.image(320, 256, 'instructions-background');
+        backgroundImage.displayWidth = this.sys.canvas.width;
 
-        let help = [
-            'Place turrets to kill the enemies!'
+        const title = "Instructions"
+        const textColor = 'white';
+        const buttonBackgroundColor = '#363636'
+        const goldColor = '#F39C12';
+
+        let titleText = this.add.text(screenCenterX, 120, title, {fontSize: "60px", fill: 'white'}).setOrigin(0.5);
+        titleText.setShadow(2, 2, "#333333", 2, false, true);
+
+        let instructions = [
+            '- Place turrets to kill the enemies!\n',
+            '- Click on the turrets to upgrade or sell\n',
+            '- lorem\n'
         ];
 
-        this.add.text(20, 180, help, { fontFamily: 'bebas', fontSize: 30, color: '#ffffff', lineSpacing: 6 }).setShadow(2, 2, "#333333", 2, false, true);
-        this.add.text(20, 450, 'Click to go back', { fontFamily: 'bebas', fontSize: 40, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+        let instructionsText = this.add.text(80, 250, instructions, {fontSize: 20});
+        instructionsText.setColor(textColor);
 
-        //this.input.keyboard.once('keydown_SPACE', this.start, this);
-        //this.input.once('pointerdown', this.start, this);
-        this.input.on('pointerdown', () => { this.scene.start('mainMenuScene')})
+        class Button {
+            constructor(x, y, label, scene, callback, paddingWidth, paddingHeight) {
+                const button = scene.add.text(x, y, label)
+                    .setOrigin(0.5)
+                    .setPadding(paddingWidth, paddingHeight)
+                    .setStyle({ backgroundColor: buttonBackgroundColor, fontSize: '25px', })
+                    .setColor('white')
+                    .setInteractive({ useHandCursor: true })
+                    .on('pointerdown', () => callback())
+                    .on('pointerover', () => button.setStyle({ fill: textColor, backgroundColor: goldColor}))
+                    .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor}));
+            }
+        }
+        let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => { this.scene.start('mainMenuScene')}, 50, 10);
+        returnButton;
     }
-
-    // start() {
-    //     this.scene.start('gameScene');
-    //     this.scene.start('UIScene');
-    // },
 });
