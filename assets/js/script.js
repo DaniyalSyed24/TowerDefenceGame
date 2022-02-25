@@ -45,7 +45,7 @@ class Button {
 const config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 640,
+    width: 800,
     height: 640,
     // width: window.innerWidth,
     // height: window.innerHeight,

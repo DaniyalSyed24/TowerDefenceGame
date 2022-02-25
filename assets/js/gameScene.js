@@ -38,10 +38,16 @@ let gameScene = Phaser.Class({
 
         this.physics.add.overlap(enemies, bullets, this.damageEnemy);
 
-        this.input.on('pointerdown', this.placeTurret);
+        this.input.on('pointerdown', this.placeTurret, this);
+
+        //this.waveStarted = false;
+        //this.turretSelected = false;
 
         this.generateWave();
     },
+
+    waveStarted: false,
+    turretSelected: false,
 
     update: function (time, delta) {
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0 && this.waveStarted) {
@@ -52,6 +58,8 @@ let gameScene = Phaser.Class({
                 enemy.setActive(true);
                 enemy.setVisible(true);
                 enemy.startOnPath();
+
+
 
                 //console.log(enemiesLeft);
 
@@ -64,6 +72,7 @@ let gameScene = Phaser.Class({
         if (enemiesLeft <= 0 && enemiesAlive <= 0) {
             CURRENT_WAVE += 1;
             this.waveStarted = false;
+            console.log(this.waveStarted);
             this.events.emit("updateWave");
             this.generateWave();
         }
@@ -88,7 +97,7 @@ let gameScene = Phaser.Class({
         enemiesLeft = waveStrength;
     },
 
-    waveStarted: false,
+    //waveStarted: false,
 
     startWave: function () {
         this.waveStarted = true;
@@ -157,11 +166,13 @@ let gameScene = Phaser.Class({
         return map[i][j] === 0;
     },
 
+    //turretSelected: false,
+
     placeTurret: function (pointer) {
         let i = Math.floor(pointer.y / 64);
         let j = Math.floor(pointer.x / 64);
         //if (this.canPlaceTurret(i, j)) {
-        if (map[i][j] === 0) {
+        if (map[i][j] === 0 && this.turretSelected) {
             let turret = turrets.get();
             if (turret) {
                 if (CURRENCY >= turret.cost) {
@@ -171,11 +182,13 @@ let gameScene = Phaser.Class({
                     turret.setInteractive({
                         useHandCursor: true
                     });
+                    selectedTurret = false;
                     //turret.on("pointerover", () => { console.log("hovered over turret"); turretHover = true; });
                     //turret.on("pointerout", () => { console.log("left turret"); turretHover = false; })
                     turret.on("pointerdown", () => { this.scene.events.emit("clickedTurret", turret) });
                     CURRENCY -= turret.cost
-                    this.scene.events.emit("updateCurrency");
+                    this.events.emit("updateCurrency");
+                    this.events.emit("placedTurret");
                 }
                 else { //this technically works but is really bad, has to be a better way to do this (towers stack on top left without this block)
                     turret.setActive(false);

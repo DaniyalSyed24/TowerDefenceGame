@@ -9,12 +9,18 @@ let UIScene = Phaser.Class({
             //this.lives = 100;
             //this.wave = 1;
         },
+    preload: function() {
+        this.load.atlas('turretSprites', 'assets/media/turrets.png', 'assets/media/turretsheet.json');
+    },
     create: function () {
         console.log("test UI");
 
-        let currencyInfo = this.add.text(475, 10, "Currency: 200", { font: "24px Arial", fill: "#FFFFFF" });
-        let livesInfo = this.add.text(475, 50, "Lives: 100", { font: "24px Arial", fill: "#FFFFFF" });
-        let waveInfo = this.add.text(475, 90, "Wave: 1", { font: "24px Arial", fill: "#FFFFFF" });
+        //tower costs
+        var turretCost = 100;
+
+        let currencyInfo = this.add.text(645, 10, "Currency: 200", { font: "18px Arial", fill: "#FFFFFF" });
+        let livesInfo = this.add.text(645, 50, "Lives: 100", { font: "18px Arial", fill: "#FFFFFF" });
+        let waveInfo = this.add.text(645, 90, "Wave: 1", { font: "18px Arial", fill: "#FFFFFF" });
 
         //game over screen
         let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
@@ -107,7 +113,7 @@ let UIScene = Phaser.Class({
         upgradeRange.setVisible(false);
 
         //wave play button
-        var playText = this.add.text(500, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align:"center" });
+        var playText = this.add.text(675, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align:"center" });
         playText.setVisible(true);
         playText.setInteractive({ useHandCursor: true });
         playText.on("pointerup", () => {
@@ -117,6 +123,40 @@ let UIScene = Phaser.Class({
         //turret outline
         var turretOutline = this.add.rectangle(0, 0, 64, 64, 0xFFFFFF, 0.4);
         turretOutline.setVisible(false);
+
+        //tower sidebar
+        var activeSelectedSprite = this.add.image(0,0,"turretSprites","turrett1v1");
+        this.input.on("pointermove", function (pointer) {
+            activeSelectedSprite.x = pointer.x;
+            activeSelectedSprite.y = pointer.y;
+        });
+        activeSelectedSprite.setVisible(false);
+        var costText = this.add.text(250, 518, "Cost: ", { font: "24px Arial", fill: "#FFFF00" });
+        costText.setVisible(false);
+        var turretIcon = this.add.image(675, 175, "turretSprites", "turett1v1");
+        turretIcon.setVisible(true);
+        turretIcon.setInteractive({ useHandCursor: true });
+        turretIcon.on("pointerup", () => {
+            //clear selected tower info
+            //towerText.setVisible(false);
+            sellButton.setVisible(false);
+            closeButton.setVisible(false);
+            upgradeFireRate.setVisible(false);
+            upgradeRange.setVisible(false);
+            turretOutline.setVisible(false);
+
+            //display tower information
+            towerText.setText("Turret");
+            towerText.setVisible(true);
+            costText.setText("Cost: " + turretCost);
+            costText.setVisible(true);
+
+            //set flag
+            game.turretSelected = true;
+
+            //follow mouse
+            activeSelectedSprite.setVisible(true);
+        })
 
         console.log(this);
         let game = this.scene.get("gameScene");
@@ -143,6 +183,13 @@ let UIScene = Phaser.Class({
 
         game.events.on("waveStarted", function () {
             playText.setVisible(false);
+        })
+
+        game.events.on("placedTurret", function () {
+            towerText.setVisible(false);
+            costText.setVisible(false);
+            activeSelectedSprite.setVisible(false);
+            game.turretSelected = false;
         })
 
         game.events.on("clickedTurret", function (turret) {
