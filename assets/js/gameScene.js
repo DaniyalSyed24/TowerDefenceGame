@@ -185,7 +185,7 @@ let gameScene = Phaser.Class({
                     selectedTurret = false;
                     //turret.on("pointerover", () => { console.log("hovered over turret"); turretHover = true; });
                     //turret.on("pointerout", () => { console.log("left turret"); turretHover = false; })
-                    turret.on("pointerdown", () => { this.scene.events.emit("clickedTurret", turret) });
+                    turret.on("pointerdown", () => { this.events.emit("clickedTurret", turret) });
                     CURRENCY -= turret.cost
                     this.events.emit("updateCurrency");
                     this.events.emit("placedTurret");
