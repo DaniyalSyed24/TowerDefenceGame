@@ -131,31 +131,54 @@ let UIScene = Phaser.Class({
             activeSelectedSprite.y = pointer.y;
         });
         activeSelectedSprite.setVisible(false);
+        var turretName = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
+        turretName.setVisible(false);
         var costText = this.add.text(250, 518, "Cost: ", { font: "24px Arial", fill: "#FFFF00" });
         costText.setVisible(false);
+        var turretDescription;
+        var turretCancelText = this.add.text(450, 510, "Cancel", { font: "32px Arial", fill: "#FF0000" });
+        var errorNoMoney = this.add.text(10, 550, "Cannot afford!", { font: "24px Arial", fill: "#FF0000" });
+        errorNoMoney.setVisible(false);
+        turretCancelText.setVisible(false);
+        turretCancelText.setInteractive({ useHandCursor: true });
+        turretCancelText.on("pointerup", () => {
+            game.turretSelected = false;
+            turretName.setVisible(false);
+            costText.setVisible(false);
+            activeSelectedSprite.setVisible(false);
+            turretCancelText.setVisible(false);
+        })
         var turretIcon = this.add.image(675, 175, "turretSprites", "turett1v1");
         turretIcon.setVisible(true);
         turretIcon.setInteractive({ useHandCursor: true });
         turretIcon.on("pointerup", () => {
             //clear selected tower info
-            //towerText.setVisible(false);
+            towerText.setVisible(false);
             sellButton.setVisible(false);
             closeButton.setVisible(false);
             upgradeFireRate.setVisible(false);
             upgradeRange.setVisible(false);
             turretOutline.setVisible(false);
 
-            //display tower information
-            towerText.setText("Turret");
-            towerText.setVisible(true);
+            errorNoMoney.setVisible(false);
+
+            //toggle tower information
+            turretName.setText("Turret");
+            turretName.setVisible(!turretName.visible);
             costText.setText("Cost: " + turretCost);
-            costText.setVisible(true);
+            costText.setVisible(!costText.visible);
+            turretCancelText.setVisible(!turretCancelText.visible);
+            if (CURRENCY >= turretCost) {
+                //set flag
+                game.turretSelected = !game.turretSelected;
 
-            //set flag
-            game.turretSelected = true;
-
-            //follow mouse
-            activeSelectedSprite.setVisible(true);
+                //follow mouse
+                activeSelectedSprite.setVisible(!activeSelectedSprite.visible);
+            }
+            else if (turretName.visible) {
+                //throw up some warning text
+                errorNoMoney.setVisible(true);
+            }
         })
 
         console.log(this);
@@ -186,13 +209,22 @@ let UIScene = Phaser.Class({
         })
 
         game.events.on("placedTurret", function () {
-            towerText.setVisible(false);
+            turretName.setVisible(false);
             costText.setVisible(false);
             activeSelectedSprite.setVisible(false);
+            turretCancelText.setVisible(false);
             game.turretSelected = false;
         })
 
         game.events.on("clickedTurret", function (turret) {
+            //if the user is placing a turret, cancel that
+            game.turretSelected = false;
+            turretName.setVisible(false);
+            costText.setVisible(false);
+            activeSelectedSprite.setVisible(false);
+            turretCancelText.setVisible(false);
+            errorNoMoney.setVisible(false);
+
             //towerText.setVisible(!towerText.visible);
 
             //console.log("clicked turret at " + turret.i + ", " + turret.j);
