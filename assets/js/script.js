@@ -23,21 +23,22 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
-const buttonBackgroundColor = '#363636'
-const textColor = 'white';
-const goldColor = '#F39C12';
+//const buttonBackgroundColor = '#363636'
+//const textColor = 'white';
+//const goldColor = '#F39C12';
 
 class Button {
-    constructor(x, y, label, scene, callback, paddingWidth, paddingHeight) {
+    constructor(x, y, label, scene, callback, paddingWidth, paddingHeight,
+        buttonBackgroundColour = "#363636", textColour="white", activeBGColour="#F39C12") {
         const button = scene.add.text(x, y, label)
             .setOrigin(0.5)
             .setPadding(paddingWidth, paddingHeight)
-            .setStyle({ backgroundColor: buttonBackgroundColor, fontSize: '25px', })
+            .setStyle({ backgroundColor: buttonBackgroundColour, fontSize: '25px', })
             .setColor('white')
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => callback())
-            .on('pointerover', () => button.setStyle({ fill: textColor, backgroundColor: goldColor }))
-            .on('pointerout', () => button.setStyle({ fill: textColor, backgroundColor: buttonBackgroundColor }));
+            .on('pointerover', () => button.setStyle({ fill: textColour, backgroundColor: activeBGColour }))
+            .on('pointerout', () => button.setStyle({ fill: textColour, backgroundColor: buttonBackgroundColour }));
     }
 }
 
@@ -45,7 +46,7 @@ class Button {
 const config = {
     type: Phaser.AUTO,  
     parent: 'game',
-    width: 640,
+    width: 800,
     height: 640,
     physics: {
         default: 'arcade'
