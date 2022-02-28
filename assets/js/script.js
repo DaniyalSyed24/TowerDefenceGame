@@ -23,9 +23,9 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
-//const buttonBackgroundColor = '#363636'
-//const textColor = 'white';
-//const goldColor = '#F39C12';
+const buttonBackgroundColor = '#363636'
+const textColor = 'white';
+const goldColor = '#F39C12';
 
 class Button {
     constructor(x, y, label, scene, callback, paddingWidth, paddingHeight,
