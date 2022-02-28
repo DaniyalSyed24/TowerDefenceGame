@@ -20,11 +20,12 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
-//const buttonBackgroundColor = '#363636'
-//const textColor = 'white';
-//const goldColor = '#F39C12';
+
+const buttonBackgroundColor = '#363636'
+const textColor = 'white';
+const goldColor = '#F39C12';
 
 class Button {
     constructor(x, y, label, scene, callback, paddingWidth, paddingHeight,
@@ -43,17 +44,14 @@ class Button {
 
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO,  
     parent: 'game',
     width: 800,
     height: 640,
-    // width: window.innerWidth,
-    // height: window.innerHeight,
-
     physics: {
         default: 'arcade'
     },
-    scene: [mainMenuScene, instructionsScene, gameScene, UIScene]
+    scene: [mainMenuScene, instructionsScene, loginScene, gameScene, UIScene]
 };
 
 const game = new Phaser.Game(config);
