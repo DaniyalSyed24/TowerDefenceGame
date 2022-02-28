@@ -23,9 +23,14 @@ let mainMenuScene = Phaser.Class({
         }, 50, 10);
 
         let buttonLogIn = new Button(screenCenterX, 375, 'Log In', this,() => {
-            this.scene.start('loginScene');
-        }, 72, 10);
+            this.scene.start('loginScene'); 
 
+            let element = document.getElementById('input-box')
+            if (element && element.style.display === 'none') {
+              element.style.display = 'block'
+            }
+        }, 72, 10);
+        
         let buttonInstructions = new Button(screenCenterX, 450, 'Instructions', this, () => {
             this.scene.start('instructionsScene')
         }, 27, 10);

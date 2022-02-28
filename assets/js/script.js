@@ -43,17 +43,14 @@ class Button {
 
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO,  
     parent: 'game',
     width: 640,
     height: 640,
-    // width: window.innerWidth,
-    // height: window.innerHeight,
-
     physics: {
         default: 'arcade'
     },
-    scene: [mainMenuScene, instructionsScene, loginScene,gameScene, UIScene]
+    scene: [mainMenuScene, instructionsScene, loginScene, gameScene, UIScene]
 };
 
 const game = new Phaser.Game(config);

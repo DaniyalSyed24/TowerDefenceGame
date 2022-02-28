@@ -20,9 +20,13 @@ let loginScene = Phaser.Class({
        
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => {
             this.scene.start('mainMenuScene')
+
+            let element = document.getElementById('input-box')
+            if (element && element.style.display != 'none') {
+              element.style.display = 'none'
+            }
         }, 50, 10);
 
-        returnButton;
+        returnButton;    
     },
-
 });
