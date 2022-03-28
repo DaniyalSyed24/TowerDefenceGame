@@ -53,6 +53,9 @@ let gameScene = Phaser.Class({
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0 && this.waveStarted) {
             let enemy = enemies.get();
             if (enemy) {
+                enemy.setHP(100);
+                enemy.setSpeed(1 / 10000);
+                enemy.setReward(10);
                 enemiesLeft -= 1;
                 enemiesAlive += 1;
                 enemy.setActive(true);
