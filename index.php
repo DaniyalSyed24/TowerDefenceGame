@@ -1,12 +1,6 @@
 <?php
 
-$con = mysqli_connect("localhost","root","","test");
-
-if(!$con){
-    echo "Failed to connect";
-}else{
-    echo "Database connected";
-}
+require_once "config.php";
 
 ?>
 
