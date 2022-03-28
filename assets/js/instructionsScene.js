@@ -10,7 +10,7 @@ let instructionsScene = Phaser.Class({
     },
 
     create: function () {
-        backgroundImage = this.add.image(320, 256, 'instructions-background');
+        backgroundImage = this.add.image(420, 256, 'instructions-background');
         backgroundImage.displayWidth = this.sys.canvas.width;
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
