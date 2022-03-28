@@ -20,7 +20,7 @@ let Enemy = new Phaser.Class({
         this.speed = speed;
     },
     setReward: function (reward) {
-        this.reward = reward
+        this.reward = reward;
     },
     startOnPath: function () {
         this.follower.t = 0;
