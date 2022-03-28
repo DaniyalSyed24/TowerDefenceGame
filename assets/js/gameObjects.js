@@ -9,11 +9,22 @@ let Enemy = new Phaser.Class({
 
             this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
             this.hp = 0;
+            this.speed = 1 / 10000;
             this.reward = 10; //currency reward for destroying enemy
         },
+
+    setHP: function(hp) {
+        this.hp = hp;
+    },
+    setSpeed: function(speed) {
+        this.speed = speed;
+    },
+    setReward: function (reward) {
+        this.reward = reward;
+    },
     startOnPath: function () {
         this.follower.t = 0;
-        this.hp = 100;
+        //this.hp = 100;
 
         path.getPoint(this.follower.t, this.follower.vec);
 
@@ -34,7 +45,8 @@ let Enemy = new Phaser.Class({
         }
     },
     update: function (time, delta) {
-        this.follower.t += ENEMY_SPEED * delta;
+        //this.follower.t += ENEMY_SPEED * delta;
+        this.follower.t += this.speed * delta;
         path.getPoint(this.follower.t, this.follower.vec);
 
         this.setPosition(this.follower.vec.x, this.follower.vec.y);

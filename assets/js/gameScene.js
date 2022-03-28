@@ -43,7 +43,7 @@ let gameScene = Phaser.Class({
         //this.waveStarted = false;
         //this.turretSelected = false;
 
-        this.generateWave();
+        enemiesLeft = Object.keys(waves[CURRENT_WAVE - 1].waveEnemies).length;
     },
 
     waveStarted: false,
@@ -53,6 +53,17 @@ let gameScene = Phaser.Class({
         if (time > this.nextEnemy && LIVES > 0 && enemiesLeft > 0 && this.waveStarted) {
             let enemy = enemies.get();
             if (enemy) {
+                //to break this down:
+                    //gets the current wave data, gets the current enemy and accesses its values (hp, speed, reward)
+                //console.log(waves[CURRENT_WAVE - 1].waveEnemies[this.enemiesSpawned]["hp"]);
+                enemy.setHP(waves[CURRENT_WAVE - 1].waveEnemies[this.enemiesSpawned]["hp"]);
+                enemy.setSpeed(waves[CURRENT_WAVE - 1].waveEnemies[this.enemiesSpawned]["speed"]);
+                enemy.setReward(waves[CURRENT_WAVE - 1].waveEnemies[this.enemiesSpawned]["reward"]);
+                //enemy.setHP(waves[this.enemiesSpawned].waveEnemies);
+                this.enemiesSpawned += 1;
+                //enemy.setHP(100);
+                //enemy.setSpeed(1 / 10000);
+                //enemy.setReward(10);
                 enemiesLeft -= 1;
                 enemiesAlive += 1;
                 enemy.setActive(true);
@@ -64,17 +75,24 @@ let gameScene = Phaser.Class({
                 //console.log(enemiesLeft);
 
                 //this.nextEnemy = time + 2000;
-                this.nextEnemy = time + 1000;
+                //this.nextEnemy = time + 1000;
                 //this.nextEnemy = time + 250;
+
+                this.nextEnemy = time + waves[CURRENT_WAVE - 1].enemySpawnSpeed;
             }
         }
 
         if (enemiesLeft <= 0 && enemiesAlive <= 0) {
-            CURRENT_WAVE += 1;
-            this.waveStarted = false;
-            console.log(this.waveStarted);
-            this.events.emit("updateWave");
-            this.generateWave();
+            if (CURRENT_WAVE >= waves.length) {
+                //win screen
+            }
+            else {
+                CURRENT_WAVE += 1;
+                this.waveStarted = false;
+                console.log(this.waveStarted);
+                this.events.emit("updateWave");
+                enemiesLeft = Object.keys(waves[CURRENT_WAVE - 1].waveEnemies).length;
+            }
         }
         if (LIVES <= 0) {
             let enemyUnits = enemies.getChildren();
@@ -88,18 +106,11 @@ let gameScene = Phaser.Class({
         }
     },
 
-    calculateWaveStrength: function () {
-        waveStrength = 5 + Math.round(waveStrength + Math.sqrt((CURRENT_WAVE + 3) * waveStrength))
-        console.log(waveStrength);
-    },
-    generateWave: function () {
-        this.calculateWaveStrength();
-        enemiesLeft = waveStrength;
-    },
-
-    //waveStarted: false,
-
     startWave: function () {
+        this.enemiesSpawned = 0;
+        //enemiesLeft = waves[CURRENT_WAVE-1].waveEnemies;
+        /*enemiesLeft = Object.keys(waves[CURRENT_WAVE - 1].waveEnemies).length;*/
+        console.log(enemiesLeft);
         this.waveStarted = true;
         this.events.emit("waveStarted");
     },
@@ -122,7 +133,7 @@ let gameScene = Phaser.Class({
         LIVES = 100;
         CURRENT_WAVE = 1;
         waveStrength = 10;
-        this.generateWave();
+        enemiesLeft = Object.keys(waves[CURRENT_WAVE - 1].waveEnemies).length;
 
         this.waveStarted = false;
 
