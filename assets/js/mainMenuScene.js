@@ -10,7 +10,7 @@ let mainMenuScene = Phaser.Class({
     },
     
     create: function () {
-        backgroundImage = this.add.image(320,256,'menu-background');
+        backgroundImage = this.add.image(420,256,'menu-background');
         backgroundImage.displayWidth = this.sys.canvas.width;
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -22,19 +22,28 @@ let mainMenuScene = Phaser.Class({
             this.scene.start('gameScene'); this.scene.start("UIScene")
         }, 50, 10);
 
-        let buttonLogIn = new Button(screenCenterX, 375, 'Log In', this,() => {
+        let buttonRegister = new Button(screenCenterX, 375, 'Register', this,() => {
+            this.scene.start('registerScene');
+
+            let element = document.getElementById('input-box-register')
+            if (element && element.style.display === 'none') {
+              element.style.display = 'block'
+            }
+        }, 57, 10);
+
+        let buttonLogIn = new Button(screenCenterX, 450, 'Log In', this,() => {
             this.scene.start('loginScene');
 
-            let element = document.getElementById('input-box')
+            let element = document.getElementById('input-box-login')
             if (element && element.style.display === 'none') {
               element.style.display = 'block'
             }
         }, 72, 10);
 
-        let buttonInstructions = new Button(screenCenterX, 450, 'Instructions', this, () => {
+        let buttonInstructions = new Button(screenCenterX, 525, 'Instructions', this, () => {
             this.scene.start('instructionsScene')
         }, 27, 10);
 
-        buttonGame, buttonLogIn, buttonInstructions;
+        buttonGame, buttonRegister, buttonLogIn, buttonInstructions;
     }
 });

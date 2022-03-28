@@ -3,7 +3,7 @@ html, body {
   background-color: #d3d8d8;
 }
 
-#input-box {
+#input-box-login, #input-box-register {
   width: 20rem;
   height: 15rem;
   padding: 1rem;
@@ -12,7 +12,7 @@ html, body {
   top: 24%;
 }
 
-#input-box input {
+#input-box-login input, #input-box-register input{
   border:none;
   border-radius:5px;
   width: 100%;
@@ -21,11 +21,11 @@ html, body {
   padding: 8px 4px;
 }
 
-#input-box input:focus{
+#input-box-login input:focus, #input-box-register input:focus{
   outline: 3px solid #F39C12;
 }
 
-#input-box button {
+#input-box-login button, #input-box-register button {
   border: none;
   border-radius: 5px;
   width: 103%;
@@ -37,7 +37,7 @@ html, body {
   font-weight: bold;
 }
 
-#input-box button:hover {
+#input-box-login button:hover, #input-box-register button:hover {
   background-color: #F39C12;
   color: white;
 }

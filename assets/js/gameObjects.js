@@ -132,6 +132,10 @@ let Turret = new Phaser.Class({
         turret.fireRateCost = 50;
         turret.rangeCost = 50;
 
+        turret.setTexture('turretSprites', 'turrett1v1');
+        turret.type = 1;
+        turret.version = 1;
+
         turret.setActive(false);
         turret.setVisible(false);
     },
