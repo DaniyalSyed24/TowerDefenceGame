@@ -33,7 +33,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div id="game"></div>
 
             <div id='logout-button'>
+            <form action="<?php echo htmlspecialchars("process/logout.php"); ?>" method="post">
                 <input type="submit" value="Logout">
+            </form>
             </div>
 
             <div id="input-box-login" style="display: none">

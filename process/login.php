@@ -83,6 +83,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
+
+    header("location: ../index.php");
     
     // Close connection
     mysqli_close($link);
