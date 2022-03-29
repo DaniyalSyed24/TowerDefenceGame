@@ -18,54 +18,41 @@ let mainMenuScene = Phaser.Class({
         let title = this.add.text(screenCenterX, 120, "Tower Game", {fontSize: "60px",fill: textColor}).setOrigin(0.5);
         title.setShadow(2, 2, "#333333", 2, false, true);
 
-        let buttonGame = new Button(screenCenterX, 300, 'Play Game', this, () => {
-            this.scene.start('gameScene'); this.scene.start("UIScene")
-
-            // TEMPPPP
-            let elementTemp = document.getElementById('logout-button')
-            if (elementTemp && elementTemp.style.display != 'none') {
-                elementTemp.style.display = 'none'
+        function removeLogoutButton(){
+            let logoutButton = document.getElementById('logout-button')
+            if (logoutButton && logoutButton.style.display != 'none') {
+                logoutButton.style.display = 'none'
             }
+        }
+
+        let buttonGame = new Button(screenCenterX, 250, 'Play Game', this, () => {
+            this.scene.start('gameScene'); this.scene.start("UIScene")
+            removeLogoutButton();
         }, 50, 10);
 
-        let buttonRegister = new Button(screenCenterX, 375, 'Register', this,() => {
+        let buttonRegister = new Button(screenCenterX, 325, 'Register', this,() => {
             this.scene.start('registerScene');
 
             let element = document.getElementById('input-box-register')
             if (element && element.style.display === 'none') {
               element.style.display = 'block'
             }
-            // TEMPPPP
-            let elementTemp = document.getElementById('logout-button')
-            if (elementTemp && elementTemp.style.display != 'none') {
-                elementTemp.style.display = 'none'
-            }
-
+            removeLogoutButton();
         }, 57, 10);
 
-        let buttonLogIn = new Button(screenCenterX, 450, 'Log In', this,() => {
+        let buttonLogIn = new Button(screenCenterX, 400, 'Log In', this,() => {
             this.scene.start('loginScene');
 
             let element = document.getElementById('input-box-login')
             if (element && element.style.display === 'none') {
               element.style.display = 'block'
             }
-
-            // TEMPPPP
-            let elementTemp = document.getElementById('logout-button')
-            if (elementTemp && elementTemp.style.display != 'none') {
-                elementTemp.style.display = 'none'
-            }
+            removeLogoutButton();
         }, 72, 10);
 
-        let buttonInstructions = new Button(screenCenterX, 525, 'Instructions', this, () => {
+        let buttonInstructions = new Button(screenCenterX, 475, 'Instructions', this, () => {
             this.scene.start('instructionsScene')
-
-            // TEMPPPP
-            let elementTemp = document.getElementById('logout-button')
-            if (elementTemp && elementTemp.style.display != 'none') {
-                elementTemp.style.display = 'none'
-            }
+            removeLogoutButton();
         }, 27, 10);
 
         buttonGame, buttonRegister, buttonLogIn, buttonInstructions;
