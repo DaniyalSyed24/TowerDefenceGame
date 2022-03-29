@@ -3,7 +3,23 @@ html, body {
   background-color: #d3d8d8;
 }
 
+#game {
+  font-family: sans-serif;
+  text-align: center;
+  width: 100vw;
+  margin: 0, auto, 0, auto;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+#logout-button{
+  position: fixed;
+  left: 40.5%;
+  top: 24%;
+}
+
 #input-box-login, #input-box-register {
+  color: white;
   width: 20rem;
   height: 15rem;
   padding: 1rem;
@@ -12,7 +28,8 @@ html, body {
   top: 24%;
 }
 
-#input-box-login input, #input-box-register input{
+#input-box-login input[type='text'], #input-box-login input[type='password'],
+#input-box-register input[type='text'], #input-box-register input[type='password']{
   border:none;
   border-radius:5px;
   width: 100%;
@@ -25,7 +42,7 @@ html, body {
   outline: 3px solid #F39C12;
 }
 
-#input-box-login button, #input-box-register button {
+#input-box-login input[type='submit'], #input-box-register input[type='submit']{
   border: none;
   border-radius: 5px;
   width: 103%;
@@ -37,16 +54,7 @@ html, body {
   font-weight: bold;
 }
 
-#input-box-login button:hover, #input-box-register button:hover {
+#input-box-login input[type='submit']:hover, #input-box-register input[type='submit']:hover {
   background-color: #F39C12;
   color: white;
-}
-
-#game {
-  font-family: sans-serif;
-  text-align: center;
-  width: 100vw;
-  margin: 0, auto, 0, auto;
-  padding-top: 2rem;
-  text-align: center;
 }

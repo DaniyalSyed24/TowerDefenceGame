@@ -25,6 +25,12 @@ let loginScene = Phaser.Class({
             if (element && element.style.display != 'none') {
               element.style.display = 'none'
             }
+
+            // TEMPPPP
+            let elementTemp = document.getElementById('logout-button')
+            if (elementTemp && elementTemp.style.display === 'none') {
+                elementTemp.style.display = 'block'
+            }
         }, 50, 10);
 
         returnButton;    
