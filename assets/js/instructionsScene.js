@@ -29,6 +29,12 @@ let instructionsScene = Phaser.Class({
 
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => {
             this.scene.start('mainMenuScene')
+
+            // TEMPPPP
+        let elementTemp = document.getElementById('logout-button')
+        if (elementTemp && elementTemp.style.display === 'none') {
+            elementTemp.style.display = 'block'
+        }
         }, 50, 10);
 
         returnButton;

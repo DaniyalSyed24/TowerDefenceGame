@@ -20,6 +20,12 @@ let mainMenuScene = Phaser.Class({
 
         let buttonGame = new Button(screenCenterX, 300, 'Play Game', this, () => {
             this.scene.start('gameScene'); this.scene.start("UIScene")
+
+            // TEMPPPP
+            let elementTemp = document.getElementById('logout-button')
+            if (elementTemp && elementTemp.style.display != 'none') {
+                elementTemp.style.display = 'none'
+            }
         }, 50, 10);
 
         let buttonRegister = new Button(screenCenterX, 375, 'Register', this,() => {
@@ -29,6 +35,12 @@ let mainMenuScene = Phaser.Class({
             if (element && element.style.display === 'none') {
               element.style.display = 'block'
             }
+            // TEMPPPP
+            let elementTemp = document.getElementById('logout-button')
+            if (elementTemp && elementTemp.style.display != 'none') {
+                elementTemp.style.display = 'none'
+            }
+
         }, 57, 10);
 
         let buttonLogIn = new Button(screenCenterX, 450, 'Log In', this,() => {
@@ -38,10 +50,22 @@ let mainMenuScene = Phaser.Class({
             if (element && element.style.display === 'none') {
               element.style.display = 'block'
             }
+
+            // TEMPPPP
+            let elementTemp = document.getElementById('logout-button')
+            if (elementTemp && elementTemp.style.display != 'none') {
+                elementTemp.style.display = 'none'
+            }
         }, 72, 10);
 
         let buttonInstructions = new Button(screenCenterX, 525, 'Instructions', this, () => {
             this.scene.start('instructionsScene')
+
+            // TEMPPPP
+            let elementTemp = document.getElementById('logout-button')
+            if (elementTemp && elementTemp.style.display != 'none') {
+                elementTemp.style.display = 'none'
+            }
         }, 27, 10);
 
         buttonGame, buttonRegister, buttonLogIn, buttonInstructions;
