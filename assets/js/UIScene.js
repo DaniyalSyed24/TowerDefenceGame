@@ -200,10 +200,11 @@ let UIScene = Phaser.Class({
         }, this)
 
         game.events.on("gameOver", function () {
+            gameOverText.setText("GAME OVER");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
             //titleScreenButton.setVisible(true);
-            gameOverText.setText("GAME OVER");
+            
         }, this)
 
         game.events.on("waveStarted", function () {
@@ -265,6 +266,13 @@ let UIScene = Phaser.Class({
             //upgradeFireRate.setVisible(!upgradeFireRate.visible);
             //upgradeRange.setVisible(!upgradeRange.visible);
         }, this);
+
+        game.events.on("gameWon", function () {
+            gameOverText.setText("You win!");
+            gameOverText.setVisible(true);
+            retryButton.setVisible(true);
+            //if we have time we could give the player rewards here
+        });
     }
 
 });

@@ -85,6 +85,7 @@ let gameScene = Phaser.Class({
         if (enemiesLeft <= 0 && enemiesAlive <= 0) {
             if (CURRENT_WAVE >= waves.length) {
                 //win screen
+                this.events.emit("gameWon");
             }
             else {
                 CURRENT_WAVE += 1;
