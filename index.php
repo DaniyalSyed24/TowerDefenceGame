@@ -70,7 +70,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             <div id='logout-button'>
                 <form action="<?php echo htmlspecialchars("process/logout.php"); ?>" method="post">
-                    <input type="submit" value="Logout">
+                    <input type="submit" class="rounded" value="Logout">
                 </form>
             </div>
         </main>
