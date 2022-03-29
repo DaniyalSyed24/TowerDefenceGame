@@ -77,6 +77,7 @@ $username_err = $password_err = $confirm_password_err = "";
         <script src="assets/js/gameScene.js"></script>
         <script src="assets/js/UIScene.js"></script>
         <script src="assets/js/instructionsScene.js"></script>
+        <script src="assets/js/waves.js"></script>
         <script src="assets/js/script.js"></script>
     </body>
 </html>

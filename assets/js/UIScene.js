@@ -25,27 +25,28 @@ let UIScene = Phaser.Class({
         //game over screen
         let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
         gameOverText.setVisible(false);
-        let retryButton = this.add.text(210, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF" });
+        let retryButton = this.add.text(290, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF" });
         retryButton.setVisible(false);
         retryButton.setInteractive({ useHandCursor: true });
         retryButton.on("pointerup", () => {
             game.reset();
             gameOverText.setVisible(false);
             retryButton.setVisible(false);
-            titleScreenButton.setVisible(false);
-        })
-        let titleScreenButton = this.add.text(300, 220, "Title Screen", { font: "24px Arial", fill: "#FFFFFF" });
-        titleScreenButton.setVisible(false);
-        titleScreenButton.setInteractive({ useHandCursor: true });
-        titleScreenButton.on("pointerup", () => {
-            //gameOverText.setVisible(false);
-            //retryButton.setVisible(false);
             //titleScreenButton.setVisible(false);
-            //game.reset();
-            //game.scene.stop("gameScene");
-            //this.scene.start("mainMenuScene");
-            console.log("to title screen");
-        }, this);
+        })
+        //let titleScreenButton = this.add.text(300, 220, "Title Screen", { font: "24px Arial", fill: "#FFFFFF" });
+        //titleScreenButton.setVisible(false);
+        //titleScreenButton.setInteractive({ useHandCursor: true });
+        //titleScreenButton.on("pointerup", () => {
+        //    gameOverText.setVisible(false);
+        //    retryButton.setVisible(false);
+        //    titleScreenButton.setVisible(false);
+        //    game.reset();
+        //    game.scene.stop("gameScene");
+        //    //game.scene.stop("UIScene");
+        //    this.scene.switch("mainMenuScene");
+        //    console.log("to title screen");
+        //}, this);
 
         //tower popup
         var selectedTurret;
@@ -183,6 +184,7 @@ let UIScene = Phaser.Class({
 
         console.log(this);
         let game = this.scene.get("gameScene");
+        console.log(game);
 
         game.events.on("updateCurrency", function () {
             currencyInfo.setText("Currency: " + CURRENCY);
@@ -198,10 +200,11 @@ let UIScene = Phaser.Class({
         }, this)
 
         game.events.on("gameOver", function () {
+            gameOverText.setText("GAME OVER");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
-            titleScreenButton.setVisible(true);
-            gameOverText.setText("GAME OVER");
+            //titleScreenButton.setVisible(true);
+            
         }, this)
 
         game.events.on("waveStarted", function () {
@@ -263,6 +266,13 @@ let UIScene = Phaser.Class({
             //upgradeFireRate.setVisible(!upgradeFireRate.visible);
             //upgradeRange.setVisible(!upgradeRange.visible);
         }, this);
+
+        game.events.on("gameWon", function () {
+            gameOverText.setText("You win!");
+            gameOverText.setVisible(true);
+            retryButton.setVisible(true);
+            //if we have time we could give the player rewards here
+        });
     }
 
 });
