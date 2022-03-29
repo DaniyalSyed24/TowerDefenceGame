@@ -3,6 +3,17 @@ require_once "process/config.php";
 
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
+
+session_start();
+//session_destroy();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    
+} else {
+    echo htmlspecialchars($_SESSION["username"]);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
