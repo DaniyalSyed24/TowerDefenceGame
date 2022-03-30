@@ -108,7 +108,7 @@ let Turret = new Phaser.Class({
             }
             //last
             else if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance &&
-                enemyUnits[i].t < last_t && this.targetingMode == 1) {
+                enemyUnits[i].follower.t < last_t && this.targetingMode == 1) {
                 returnValue = enemyUnits[i];
                 last_t = enemyUnits[i].t;
             }
