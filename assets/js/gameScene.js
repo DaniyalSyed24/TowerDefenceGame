@@ -17,7 +17,7 @@ let gameScene = Phaser.Class({
     },
 
     create: function () {
-        this.add.image(400, 310, 'ui-Background');
+        this.add.image(400, 320, 'ui-Background');
         this.add.image(320, 256, 'gameBack');
         var xhr = new XMLHttpRequest()
 
