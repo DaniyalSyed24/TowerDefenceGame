@@ -1,7 +1,7 @@
 <?php
 require_once "process/config.php";
 
-$username = $password = $confirm_password = "";
+$username = $password = $confirm_password = $badgeCode = "";
 $username_err = $password_err = $confirm_password_err = "";
 
 session_start();
@@ -77,8 +77,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
 
             <div id='badges-form' style="display: none">
-                <input type="text" name="badgeCode" placeholder="Badge Code"><br/>
+                <form action="<?php echo htmlspecialchars("process/addBadge.php"); ?>" method="post">
+                <input type="text" name="badgeCode" placeholder="Badge Code" value="<?php echo $badgeCode; ?>"><br/>
                 <input type="submit" value="Submit">
+                </form>
             </div>
         </main>
 
