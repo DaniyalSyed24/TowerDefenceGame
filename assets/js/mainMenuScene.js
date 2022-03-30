@@ -50,11 +50,15 @@ let mainMenuScene = Phaser.Class({
             removeLogoutButton();
         }, 72, 10);
 
-        let buttonInstructions = new Button(screenCenterX, 475, 'Instructions', this, () => {
-            this.scene.start('instructionsScene')
+        let buttonBadges = new Button(screenCenterX, 475, 'My Badges', this, () => {
+            this.scene.start('badgeScene')
+            let element = document.getElementById('badges-form')
+            if (element && element.style.display === 'none') {
+              element.style.display = 'block'
+            }
             removeLogoutButton();
-        }, 27, 10);
+        }, 49, 10);
 
-        buttonGame, buttonRegister, buttonLogIn, buttonInstructions;
+        buttonGame, buttonRegister, buttonLogIn, buttonBadges;
     }
 });

@@ -18,7 +18,7 @@ html, body {
   top: 24%;
 }
 
-#input-box-login, #input-box-register {
+#input-box-login, #input-box-register, #badges-form{
   color: white;
   width: 20rem;
   height: 15rem;
@@ -29,7 +29,7 @@ html, body {
 }
 
 #input-box-login input[type='text'], #input-box-login input[type='password'],
-#input-box-register input[type='text'], #input-box-register input[type='password']{
+#input-box-register input[type='text'], #input-box-register input[type='password'], #badges-form input{
   border:none;
   border-radius:5px;
   width: 100%;
@@ -38,11 +38,11 @@ html, body {
   padding: 8px 4px;
 }
 
-#input-box-login input:focus, #input-box-register input:focus{
+#input-box-login input:focus, #input-box-register input:focus, #badges-form input:focus{
   outline: 3px solid #F39C12;
 }
 
-#input-box-login input[type='submit'], #input-box-register input[type='submit']{
+#input-box-login input[type='submit'], #input-box-register input[type='submit'], #badges-form input[type='submit']{
   border: none;
   border-radius: 5px;
   width: 103%;
@@ -54,7 +54,7 @@ html, body {
   font-weight: bold;
 }
 
-#input-box-login input[type='submit']:hover, #input-box-register input[type='submit']:hover {
+#input-box-login input[type='submit']:hover, #input-box-register input[type='submit']:hover, #badges-form input[type='submit']:hover {
   background-color: #F39C12;
   color: white;
 }

@@ -25,4 +25,5 @@ The project can be run by visiting ```localhost/tower-defence-game/``` using a b
 8. Set username and password to ```VARCHAR```, leave ID as ```INT```
 9. Set the length of ```ID```, ```username``` and ```password``` to 255
 10. Set the length of each ```badge``` field to 1
-11. Check ```A I``` (auto-increment) for ID
+11. Set each ```badge``` field to default to 0
+12. Check ```A I``` (auto-increment) for ID
