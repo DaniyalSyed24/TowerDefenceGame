@@ -69,6 +69,7 @@ let Turret = new Phaser.Class({
         function Turret(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'turretSprites', 'turrett1v1');
             this.nextTic = 0;
+            this.targetingMode = 0; //0=first, 1=last, 2=strong, 3=weak
             this.cost = 100; //cost to place turret
 
             //upgrades
@@ -92,11 +93,40 @@ let Turret = new Phaser.Class({
     },
     getEnemy: function (x, y, distance) {
         let enemyUnits = enemies.getChildren();
+        let returnValue = false;
+        let first_t = 0;
+        let last_t = 1;
+        let strongest_hp = 0;
+        let weakest_hp = Number.MAX_SAFE_INTEGER;
+        
         for (let i = 0; i < enemyUnits.length; i++) {
-            if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance)
-                return enemyUnits[i];
+            //first
+            if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance &&
+                enemyUnits[i].follower.t > first_t && this.targetingMode == 0) {
+                returnValue = enemyUnits[i];
+                first_t = enemyUnits[i].follower.t;
+            }
+            //last
+            else if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance &&
+                enemyUnits[i].t < last_t && this.targetingMode == 1) {
+                returnValue = enemyUnits[i];
+                last_t = enemyUnits[i].t;
+            }
+            //strong
+            else if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance &&
+                enemyUnits[i].hp > strongest_hp && this.targetingMode == 2) {
+                returnValue = enemyUnits[i];
+                strongest_hp = enemyUnits[i].hp;
+            }
+
+            //weak
+            else if (enemyUnits[i].active && Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) < distance &&
+                enemyUnits[i].hp < weakest_hp && this.targetingMode == 3) {
+                returnValue = enemyUnits[i];
+                weakest_hp = enemyUnits[i].hp;
+            }
         }
-        return false;
+        return returnValue;
     },
     fire: function () {
 
