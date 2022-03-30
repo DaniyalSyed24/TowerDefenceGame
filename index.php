@@ -88,6 +88,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <script src="assets/js/loginScene.js"></script>
         <script src="assets/js/registerScene.js"></script>
         <script src="assets/js/mainMenuScene.js"></script>
+        <script src="assets/js/instructionsScene.js"></script>
         <script src="assets/js/gameObjects.js"></script>
         <script src="assets/js/gameScene.js"></script>
         <script src="assets/js/UIScene.js"></script>
