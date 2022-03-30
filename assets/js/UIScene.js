@@ -146,6 +146,7 @@ let UIScene = Phaser.Class({
             game.turretSelected = false;
             turretName.setVisible(false);
             costText.setVisible(false);
+            errorNoMoney.setVisible(false);
             activeSelectedSprite.setVisible(false);
             turretCancelText.setVisible(false);
         })
