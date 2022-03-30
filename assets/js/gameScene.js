@@ -13,11 +13,12 @@ let gameScene = Phaser.Class({
         this.load.image('EnemyOrc', 'assets/media/small orc.png');
         this.load.image('bullet', 'assets/media/bullet.png');
         this.load.image('gameBack', 'assets/media/level1-background.png');
+        this.load.image('ui-Background', 'assets/media/mainBackground');
     },
 
     create: function () {
+        this.add.image(400, 310, 'ui-Background');
         this.add.image(320, 256, 'gameBack');
-
         var xhr = new XMLHttpRequest()
 
         xhr.onload = function () {
