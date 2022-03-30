@@ -339,6 +339,35 @@ let UIScene = Phaser.Class({
                 upgradeRange.setText("Upgrade TURRET RANGE for " + turret.rangeCost + " currency");
             }
 
+            switch (selectedTurret.targetingMode) {
+                case 0:
+                    targetingFirst.setColor("#00FF00");
+                    targetingLast.setColor("#FF0000");
+                    targetingStrong.setColor("#FF0000");
+                    targetingWeak.setColor("#FF0000");
+                    break;
+                case 1:
+                    targetingFirst.setColor("#FF0000");
+                    targetingLast.setColor("#00FF00");
+                    targetingStrong.setColor("#FF000");
+                    targetingWeak.setColor("#FF0000");
+                    break;
+                case 2:
+                    targetingFirst.setColor("#FF0000");
+                    targetingLast.setColor("#FF0000");
+                    targetingStrong.setColor("#00FF00");
+                    targetingWeak.setColor("#FF0000");
+                    break;
+                case 3:
+                    targetingFirst.setColor("#FF0000");
+                    targetingLast.setColor("#FF0000");
+                    targetingStrong.setColor("#FF0000");
+                    targetingWeak.setColor("#00FF00");
+                    break;
+                default:
+                    console.log("This turret somehow has an invalid targeting mode");
+            }
+
             //upgradeFireRate.setVisible(!upgradeFireRate.visible);
             //upgradeRange.setVisible(!upgradeRange.visible);
         }, this);
