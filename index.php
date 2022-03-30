@@ -75,6 +75,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <input type="submit" class="rounded" value="Logout">
                 </form>
             </div>
+
+            <div id='badges-form' style="display: none">
+                <input type="text" name="badgeCode" placeholder="Badge Code"><br/>
+                <input type="submit" value="Submit">
+            </div>
         </main>
 
         <footer></footer>
@@ -86,7 +91,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <script src="assets/js/gameObjects.js"></script>
         <script src="assets/js/gameScene.js"></script>
         <script src="assets/js/UIScene.js"></script>
-        <script src="assets/js/instructionsScene.js"></script>
+        <script src="assets/js/badgeScene.js"></script>
         <script src="assets/js/waves.js"></script>
         <script src="assets/js/script.js"></script>
     </body>
