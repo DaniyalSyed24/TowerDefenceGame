@@ -63,6 +63,11 @@ let UIScene = Phaser.Class({
         var targetingStrong = this.add.text(500, 589, "Strongest", { font: "20px Arial", fill: "#FF0000" });
         var targetingWeak = this.add.text(500, 611, "Weakest", { font: "20px Arial", fill: "#FF0000" });
 
+        targetingFirst.setInteractive({ useHandCursor: true });
+        targetingLast.setInteractive({ useHandCursor: true });
+        targetingStrong.setInteractive({ useHandCursor: true });
+        targetingWeak.setInteractive({ useHandCursor: true });
+
         sellButton.setInteractive({
             useHandCursor: true
         });
@@ -124,6 +129,38 @@ let UIScene = Phaser.Class({
             targetingLast.setVisible(false);
             targetingStrong.setVisible(false);
             targetingWeak.setVisible(false);
+        })
+
+        targetingFirst.on("pointerup", () => {
+            targetingFirst.setColor("#00FF00");
+            targetingLast.setColor("#FF0000");
+            targetingStrong.setColor("#FF0000");
+            targetingWeak.setColor("#FF0000");
+            selectedTurret.targetingMode = 0;
+        })
+
+        targetingLast.on("pointerup", () => {
+            targetingFirst.setColor("#FF0000");
+            targetingLast.setColor("#00FF00");
+            targetingStrong.setColor("#FF0000");
+            targetingWeak.setColor("#FF0000");
+            selectedTurret.targetingMode = 1;
+        })
+
+        targetingStrong.on("pointerup", () => {
+            targetingFirst.setColor("#FF0000");
+            targetingLast.setColor("#FF0000");
+            targetingStrong.setColor("#00FF00");
+            targetingWeak.setColor("#FF0000");
+            selectedTurret.targetingMode = 2;
+        })
+
+        targetingWeak.on("pointerup", () => {
+            targetingFirst.setColor("#FF0000");
+            targetingLast.setColor("#FF0000");
+            targetingStrong.setColor("#FF0000");
+            targetingWeak.setColor("#00FF00");
+            selectedTurret.targetingMode = 3;
         })
 
         towerText.setVisible(false);
