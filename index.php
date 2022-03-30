@@ -11,10 +11,12 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     
 } else {
-    echo htmlspecialchars($_SESSION["username"]);
+    echo htmlspecialchars($_SESSION["username"]) . " logged in.";
+    echo htmlspecialchars ("Badge 1: " . ($_SESSION["badge1"]));
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

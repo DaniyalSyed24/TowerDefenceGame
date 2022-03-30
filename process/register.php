@@ -93,7 +93,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Close connection
     mysqli_close($link);
 
-    header("location: ../index.php");
+    //header("location: ../index.php");
 
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<h1 style="text-align:center";>Invalid Username/Password!!</h1>
+<h2 style="text-align:center";>Password must be more than 6 characters, username may only contain letters, numbers, and underscores.</h2>
+<h3 style="text-align:center";>Redirecting to main page...</h3>
+
+<meta http-equiv="refresh" content="3;url=../index.php" />
+
+</html>

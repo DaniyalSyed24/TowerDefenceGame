@@ -14,19 +14,8 @@ html, body {
 
 #logout-button{
   position: fixed;
-  left: 31%;
-  top: 7%;
-}
-
-.rounded{
-  border-radius: 50%;
-  padding: 10px;
-  background-color: #363636;
-  color: white;
-}
-
-.rounded:hover{
-  background-color: #F39C12;
+  left: 40.5%;
+  top: 24%;
 }
 
 #input-box-login, #input-box-register, #badges-form{
