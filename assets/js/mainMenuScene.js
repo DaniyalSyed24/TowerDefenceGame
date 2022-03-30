@@ -64,7 +64,7 @@ let mainMenuScene = Phaser.Class({
 
             removeLogoutButton();
         }, 10, 5)
-
+        
         buttonGame, buttonRegister, buttonLogIn, buttonBadges, buttonInstructions;
     }
 });
