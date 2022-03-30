@@ -58,3 +58,20 @@ html, body {
   background-color: #F39C12;
   color: white;
 }
+
+#logout-button{
+  position: absolute;
+  left: 31%;
+  top: 7%;
+}
+
+.rounded {
+  background-color: #363636;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.rounded:hover {
+  background-color: #F39C12;
+}

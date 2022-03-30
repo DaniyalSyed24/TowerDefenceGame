@@ -23,9 +23,6 @@ let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
 
 
-
-
-
 const buttonBackgroundColor = '#363636'
 const textColor = 'white';
 const goldColor = '#F39C12';
@@ -54,7 +51,7 @@ const config = {
     physics: {
         default: 'arcade'
     },
-    scene: [mainMenuScene, badgeScene, registerScene, loginScene, gameScene, UIScene]
+    scene: [mainMenuScene, badgeScene, registerScene, loginScene, gameScene, instructionsScene, UIScene]
 };
 
 const game = new Phaser.Game(config);
