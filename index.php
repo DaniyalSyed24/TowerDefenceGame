@@ -34,21 +34,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <main>
             <div id="game"></div>
 
-            <div id='logout-button'>
-            <form action="<?php echo htmlspecialchars("process/logout.php"); ?>" method="post">
-                <input type="submit" value="Logout">
-            </form>
-            </div>
-
             <div id="input-box-login" style="display: none">
                 <form action="<?php echo htmlspecialchars("process/login.php"); ?>" method="post">
                     <div class="form-group">
-                        <!-- <label>Username</label> -->
                         <input type="text" name="username" placeholder="Username" class="form-control<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                         <span class="invalid-feedback"><?php echo $username_err; ?></span>
                     </div>    
                     <div class="form-group">
-                        <!-- <label>Password</label> -->
                         <input type="password" name="password" placeholder="Password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                         <span class="invalid-feedback"><?php echo $password_err; ?></span>
                     </div>
@@ -61,23 +53,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div id="input-box-register" style="display: none">
                 <form action="<?php echo htmlspecialchars("process/register.php"); ?>" method="post">
                 <div class="form-group">
-                    <!-- <label>Username</label> -->
                     <input type="text" name="username" placeholder="Username"class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                     <span class="invalid-feedback"><?php echo $username_err; ?></span>
                 </div>    
                 <div class="form-group">
-                    <!-- <label>Password</label> -->
                     <input type="password" name="password" placeholder="Password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
                 <div class="form-group">
-                    <!-- <label>Confirm Password</label> -->
                     <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                     <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Register">
-                </div>                
+                </div>
+                </form>
+            </div>
+
+            <div id='logout-button'>
+                <form action="<?php echo htmlspecialchars("process/logout.php"); ?>" method="post">
+                    <input type="submit" class="rounded" value="Logout">
                 </form>
             </div>
         </main>
