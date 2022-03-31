@@ -32,14 +32,14 @@ let waveStrength = 10; //default value
 let enemiesLeft;       //amount of enemies left to spawn in the current wave
 let enemiesAlive = 0;  //enemies currently alive
 
-let map =  [[0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+let map =  [[2, -1, 0, 2, 0, 0, 0, 0, 0, 2],
             [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, -1, -1, -1, -1, -1, -1, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, -1, 0, 0]];
+            [0, 0, 2, 2, 0, 0, 0, -1, 0, 0],
+            [2, 0, 0, 0, 0, 0, 0, -1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 2, -1, 0, 0]];
 
 
 const buttonBackgroundColor = '#363636'
