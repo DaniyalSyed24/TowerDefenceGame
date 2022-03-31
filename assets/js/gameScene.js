@@ -128,6 +128,7 @@ let gameScene = Phaser.Class({
             turretUnits[t].cost = 100;
             turretUnits[t].fireRateCost = 50;
             turretUnits[t].rangeCost = 50;
+            turretUnits[t].setTexture('turretSprites', 'turrett1v1');
 
             turretUnits[t].setActive(false);
             turretUnits[t].setVisible(false);
