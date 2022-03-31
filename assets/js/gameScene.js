@@ -43,10 +43,10 @@ let gameScene = Phaser.Class({
         this.input.on('pointerdown', this.placeTurret, this);
 
         //badge buffs
-        let bonus_currency = (50 * badges[0]) + (50 * badges[7]) + (100 * badges[1]);
-        let bonus_lives = (50 * badges[4]) + (50 * badges[6]);
-        CURRENCY += bonus_currency;
-        LIVES += bonus_lives;
+        this.bonus_currency = (50 * badges[0]) + (50 * badges[7]) + (100 * badges[1]);
+        this.bonus_lives = (50 * badges[4]) + (50 * badges[6]);
+        CURRENCY += this.bonus_currency;
+        LIVES += this.bonus_lives;
         this.events.emit("updateCurrency");
         this.events.emit("updateLives");
 
@@ -154,8 +154,8 @@ let gameScene = Phaser.Class({
             turretUnits[t].setActive(false);
             turretUnits[t].setVisible(false);
         }
-        CURRENCY = 200 + bonus_currency;
-        LIVES = 100 + bonus_lives;
+        CURRENCY = 200 + this.bonus_currency;
+        LIVES = 100 + this.bonus_lives;
         CURRENT_WAVE = 1;
         waveStrength = 10;
         enemiesLeft = Object.keys(waves[CURRENT_WAVE - 1].waveEnemies).length;
