@@ -25,7 +25,7 @@ let UIScene = Phaser.Class({
         var gbadge6 = this.add.image(750, 325, 'greyBadges', 'gbadge6');
         var gbadge7 = this.add.image(750, 375, 'greyBadges', 'gbadge7');
         var gbadge8 = this.add.image(750, 425, 'greyBadges', 'gbadge8');
-        var badge1 = this.add.image(675, 275, 'badgeSprites', '01');
+        var badge1 = this.add.image(675, 275, 'badgeSprites', '01').setInteractive();
         var badge2 = this.add.image(675, 325, 'badgeSprites', '02');
         var badge3 = this.add.image(675, 375, 'badgeSprites', '03');
         var badge4 = this.add.image(675, 425, 'badgeSprites', '04');
@@ -33,6 +33,16 @@ let UIScene = Phaser.Class({
         var badge6 = this.add.image(750, 325, 'badgeSprites', '06');
         var badge7 = this.add.image(750, 375, 'badgeSprites', '07');
         var badge8 = this.add.image(750, 425, 'badgeSprites', '08');
+
+        var badge1text = this.add.text(290, 260, "Enterprise-grade AI: +50 currency", {font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5})
+
+        badge1text.setVisible(false);
+        badge1.on("pointerover", function(pointer) {
+            badge1text.setVisible(true);
+        })
+        badge1.on("pointerout", function (pointer) {
+            badge1text.setVisible(false);
+        })
 
         gbadge1.setVisible(true);
         gbadge2.setVisible(true);
@@ -45,6 +55,7 @@ let UIScene = Phaser.Class({
 
         if (badges[0] == 1) {
             badge1.setVisible(true);
+
         } else {
             badge1.setVisible(false);
         }
