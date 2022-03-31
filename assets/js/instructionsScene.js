@@ -20,8 +20,7 @@ let instructionsScene = Phaser.Class({
 
         let instructionsContent = [
             '- Place turrets to kill the enemies!\n',
-            '- Click on the turrets to upgrade or sell\n',
-            '- lorem\n'
+            '- Click on the turrets to upgrade or sell\n'
         ];
 
         let instructions = this.add.text(80, 250, instructionsContent, {fontSize: 20});
