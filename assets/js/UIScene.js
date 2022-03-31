@@ -18,8 +18,8 @@ let UIScene = Phaser.Class({
         //tower costs
         var turretCost = 100;
 
-        let currencyInfo = this.add.text(645, 10, "Currency: 200", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
-        let livesInfo = this.add.text(645, 50, "Lives: 100", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
+        let currencyInfo = this.add.text(645, 10, "Currency: " + CURRENCY, { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
+        let livesInfo = this.add.text(645, 50, "Lives: " + LIVES, { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
         let waveInfo = this.add.text(645, 90, "Wave: 1", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
 
         //game over screen

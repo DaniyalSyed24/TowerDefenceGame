@@ -45,10 +45,10 @@ let gameScene = Phaser.Class({
         //badge buffs
         let bonus_currency = (50 * badges[0]) + (50 * badges[7]) + (100 * badges[1]);
         let bonus_lives = (50 * badges[4]) + (50 * badges[6]);
-        
-
         CURRENCY += bonus_currency;
         LIVES += bonus_lives;
+        this.events.emit("updateCurrency");
+        this.events.emit("updateLives");
 
         //this.waveStarted = false;
         //this.turretSelected = false;
@@ -101,6 +101,7 @@ let gameScene = Phaser.Class({
                 CURRENT_WAVE += 1;
                 if (badges[5] == 1) {
                     LIVES += 10;
+                    this.events.emit("updateLives");
                 }
                 this.waveStarted = false;
                 console.log(this.waveStarted);
