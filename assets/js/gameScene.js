@@ -50,6 +50,15 @@ let gameScene = Phaser.Class({
         this.events.emit("updateCurrency");
         this.events.emit("updateLives");
 
+        if (badges[2] == 1) {
+            BULLET_DAMAGE *= 1.5;
+        }
+
+        this.currency_multiplier = 1;
+        if (badges[3] == 1) {
+            this.currency_multiplier = 2;
+        }
+
         //this.waveStarted = false;
         //this.turretSelected = false;
 

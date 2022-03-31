@@ -21,19 +21,10 @@ xhr.onload = function () {
 xhr.open('GET', 'process/badges.php')
 xhr.send()
 
-let currency_multiplier = 1;
-if (badges[3] == 1) {
-    currency_multiplier = 2;
-}
-let damage_multiplier = 1;
-if (badges[2] == 1) {
-    damage_multiplier = 1.5;
-}
-
 let ENEMY_SPEED = 1 / 10000;
 let CURRENT_WAVE = 1;
 let LIVES = 100;
-let BULLET_DAMAGE = 50 * damage_multiplier;
+let BULLET_DAMAGE = 50;
 
 let CURRENCY = 200;
 
