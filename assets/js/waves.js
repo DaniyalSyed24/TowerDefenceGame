@@ -24,10 +24,16 @@ for (var i = 0; i < 20; i++) {
 }
 //fun time, wave data
 //wave 1
-for (var i = 0; i < 24; i++) { //var i = 0; i < 24; i++
-    waves[0].addEnemy("EnemyOrc", 100, 1 / 10000, 5);
+for (var i = 0; i < 150; i++) {
+    waves[0].addEnemy("EnemyOrc", 550, 1 / 10000, 10);
 }
-waves[0].enemySpawnSpeed = 1000;
+waves[0].enemySpawnSpeed = 300;
+
+
+// for (var i = 0; i < 24; i++) { //var i = 0; i < 24; i++
+//     waves[0].addEnemy("EnemyOrc", 100, 1 / 10000, 5);
+// }
+// waves[0].enemySpawnSpeed = 1000;
 
 //wave 2
 for (var i = 0; i < 36; i++) {
@@ -98,20 +104,16 @@ waves[10].enemySpawnSpeed = 300;
 
 //wave 12
 for (var i = 0; i < 200; i++) {
-    for (var j = 0; j < 11; j++) {
-        waves[11].addEnemy("EnemyOrc", 1000, 1 / 10000, 10);
-        waves[11].addEnemy("EnemyOrc", 1050, 1 / 10000, 10);
-    }
-    waves[11].addEnemy("EnemyOrc", 150, 1 / 3750, 10);
+    waves[0].addEnemy("EnemyOrc", 650, 1 / 10000, 10); //ok
+    waves[0].addEnemy("EnemyOrc", 150, 1 / 3750, 10);
 }
-waves[11].enemySpawnSpeed = 200;
+waves[0].enemySpawnSpeed = 300;
 
 //wave 13
-for (var i = 0; i < 210; i++) {
-    waves[12].addEnemy("EnemyOrc", 250, 1 / 15000, 10);
-    waves[12].addEnemy("EnemyOrc", 1500, 1 / 15000, 10);
+for (var i = 0; i < 150; i++) {
+    waves[0].addEnemy("EnemyOrc", 550, 1 / 10000, 10); //ok
 }
-waves[12].enemySpawnSpeed = 300;
+waves[0].enemySpawnSpeed = 300;
 
 //wave 14
 for (var i = 0; i < 230; i++) {
