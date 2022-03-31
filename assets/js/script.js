@@ -2,6 +2,16 @@ let path;
 let turrets;
 let enemies;
 
+var xhr = new XMLHttpRequest()
+xhr.onload = function () {
+    var data = JSON.parse(this.responseText)
+
+    // You can now use the data
+    console.log(data)
+}
+xhr.open('GET', 'process/badges.php')
+xhr.send()
+
 let ENEMY_SPEED = 1 / 10000;
 let CURRENT_WAVE = 1;
 let LIVES = 100;

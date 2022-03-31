@@ -18,18 +18,7 @@ let gameScene = Phaser.Class({
 
     create: function () {
         this.add.image(400, 320, 'ui-Background');
-        this.add.image(320, 256, 'gameBack');
-        var xhr = new XMLHttpRequest()
-
-        xhr.onload = function () {
-            var data = JSON.parse(this.responseText)
-
-            // You can now use the data
-            console.log(data)
-        }
-
-        xhr.open('GET', 'process/badges.php')
-        xhr.send()
+        this.add.image(320, 256, 'gameBack');       
 
         let graphics = this.add.graphics();
         this.drawLines(graphics);
