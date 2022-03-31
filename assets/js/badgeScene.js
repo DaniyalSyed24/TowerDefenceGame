@@ -15,7 +15,7 @@ let badgeScene = Phaser.Class({
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
-        let title = this.add.text(screenCenterX, 120, "My Badges", {fontSize: "60px", fill: 'white'}).setOrigin(0.5);
+        let title = this.add.text(screenCenterX, 120, "My Badges", { fontSize: "60px", fill: 'white', strokeThickness: 5}).setOrigin(0.5);
         title.setShadow(2, 2, "#333333", 2, false, true);
 
         let returnButton = new Button(screenCenterX, 500, 'Return to Main Menu', this, () => {

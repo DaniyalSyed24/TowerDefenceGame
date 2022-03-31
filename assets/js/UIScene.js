@@ -18,14 +18,14 @@ let UIScene = Phaser.Class({
         //tower costs
         var turretCost = 100;
 
-        let currencyInfo = this.add.text(645, 10, "Currency: 200", { font: "18px Arial", fill: "#FFFFFF" });
-        let livesInfo = this.add.text(645, 50, "Lives: 100", { font: "18px Arial", fill: "#FFFFFF" });
-        let waveInfo = this.add.text(645, 90, "Wave: 1", { font: "18px Arial", fill: "#FFFFFF" });
+        let currencyInfo = this.add.text(645, 10, "Currency: 200", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
+        let livesInfo = this.add.text(645, 50, "Lives: 100", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
+        let waveInfo = this.add.text(645, 90, "Wave: 1", { font: "18px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
 
         //game over screen
-        let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF" });
+        let gameOverText = this.add.text(180, 170, "", { font: "48px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
         gameOverText.setVisible(false);
-        let retryButton = this.add.text(290, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF" });
+        let retryButton = this.add.text(290, 220, "Retry", { font: "24px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
         retryButton.setVisible(false);
         retryButton.setInteractive({ useHandCursor: true });
         retryButton.on("pointerup", () => {
@@ -50,18 +50,18 @@ let UIScene = Phaser.Class({
 
         //tower popup
         var selectedTurret;
-        var towerText = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
-        var sellButton = this.add.text(10, 550, "Sell for ", { font: "24px Arial", fill: "#FF0000" });
-        var closeButton = this.add.text(300, 510, "Close", { font: "32px Arial", fill: "#FF0000" });
-        var upgradeFireRate = this.add.text(10, 580, "Upgrade FIRING RATE for ", { font: "24px Arial", fill: "#0000FF" });
-        var upgradeRange = this.add.text(10, 610, "Upgrade TURRET RANGE for ", { font: "24px Arial", fill: "#0000FF" });
+        var towerText = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF", stroke: '#000000', strokeThickness: 5 });
+        var sellButton = this.add.text(10, 550, "Sell for ", { font: "24px Arial", fill: "#FF0000", stroke: '#000000', strokeThickness: 5 });
+        var closeButton = this.add.text(300, 510, "Close", { font: "32px Arial", fill: "#FF0000", stroke: '#000000', strokeThickness: 5 });
+        var upgradeFireRate = this.add.text(10, 580, "Upgrade FIRING RATE for ", { font: "24px Arial", fill: "#0000FF", stroke: '#000000',strokeThickness: 5 });
+        var upgradeRange = this.add.text(10, 610, "Upgrade TURRET RANGE for ", { font: "24px Arial", fill: "#0000FF", stroke: '#000000',strokeThickness: 5 });
 
         //tower popup: targeting
-        var targetingHeader = this.add.text(500, 510, "Targeting:", { font: "32px Arial", fill: "#FFFFFF" });
-        var targetingFirst = this.add.text(500, 545, "First", { font: "20px Arial", fill: "#00FF00" });
-        var targetingLast = this.add.text(500, 567, "Last", { font: "20px Arial", fill: "#FF0000" });
-        var targetingStrong = this.add.text(500, 589, "Strongest", { font: "20px Arial", fill: "#FF0000" });
-        var targetingWeak = this.add.text(500, 611, "Weakest", { font: "20px Arial", fill: "#FF0000" });
+        var targetingHeader = this.add.text(500, 510, "Targeting:", { font: "32px Arial", fill: "#FFFFFF", stroke: '#000000',strokeThickness: 5 });
+        var targetingFirst = this.add.text(500, 545, "First", { font: "20px Arial", fill: "#00FF00", stroke: '#000000', strokeThickness: 5 });
+        var targetingLast = this.add.text(500, 567, "Last", { font: "20px Arial", fill: "#FF0000", stroke: '#000000',strokeThickness: 5 });
+        var targetingStrong = this.add.text(500, 589, "Strongest", { font: "20px Arial", fill: "#FF0000", stroke: '#000000',strokeThickness: 5 });
+        var targetingWeak = this.add.text(500, 611, "Weakest", { font: "20px Arial", fill: "#FF0000", stroke: '#000000',strokeThickness: 5 });
 
         targetingFirst.setInteractive({ useHandCursor: true });
         targetingLast.setInteractive({ useHandCursor: true });
@@ -176,7 +176,7 @@ let UIScene = Phaser.Class({
         targetingWeak.setVisible(false);
 
         //wave play button
-        var playText = this.add.text(675, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align:"center" });
+        var playText = this.add.text(675, 540, "Start\nWave", { font: "36px Arial", fill: "#00FF00", align: "center", stroke: '#000000', strokeThickness: 5 });
         playText.setVisible(true);
         playText.setInteractive({ useHandCursor: true });
         playText.on("pointerup", () => {
@@ -194,13 +194,13 @@ let UIScene = Phaser.Class({
             activeSelectedSprite.y = pointer.y;
         });
         activeSelectedSprite.setVisible(false);
-        var turretName = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF" });
+        var turretName = this.add.text(10, 510, "Turret", { font: "32px Arial", fill: "#FFFFFF", stroke: '#000000',strokeThickness: 5 });
         turretName.setVisible(false);
-        var costText = this.add.text(250, 518, "Cost: ", { font: "24px Arial", fill: "#FFFF00" });
+        var costText = this.add.text(250, 518, "Cost: ", { font: "24px Arial", fill: "#FFFF00", stroke: '#000000',strokeThickness: 5 });
         costText.setVisible(false);
         var turretDescription;
-        var turretCancelText = this.add.text(450, 510, "Cancel", { font: "32px Arial", fill: "#FF0000" });
-        var errorNoMoney = this.add.text(10, 550, "Cannot afford!", { font: "24px Arial", fill: "#FF0000" });
+        var turretCancelText = this.add.text(450, 510, "Cancel", { font: "32px Arial", fill: "#FF0000", stroke: '#000000',strokeThickness: 5 });
+        var errorNoMoney = this.add.text(10, 550, "Cannot afford!", { font: "24px Arial", fill: "#FF0000", stroke: '#000000',strokeThickness: 5 });
         errorNoMoney.setVisible(false);
         turretCancelText.setVisible(false);
         turretCancelText.setInteractive({ useHandCursor: true });
