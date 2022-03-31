@@ -74,8 +74,8 @@ waves[7].enemySpawnSpeed = 700;
 
 //wave 9
 for (var i = 0; i < 45; i++) {
-    waves[8].addEnemy("EnemyOrc", 200, 1 / 8000, 10); //ok
-    waves[8].addEnemy("EnemyOrc", 200, 1 / 8000, 10);
+    waves[8].addEnemy("EnemyOrc", 200, 1 / 8000, 5); //ok
+    waves[8].addEnemy("EnemyOrc", 200, 1 / 8000, 5);
     waves[8].addEnemy("EnemyOrc", 50, 1 / 2500, 5);
     waves[8].addEnemy("EnemyOrc", 100, 1 / 4000, 5);
 }
@@ -83,38 +83,37 @@ waves[8].enemySpawnSpeed = 500;
 
 //wave 10
 waves[9].addEnemy("EnemyOrc", 2000, 1 / 40000, 250); //should lose more health...
-for (var i = 0; i < 100; i++) {
-    waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 10);
-    waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 10);
+for (var i = 0; i < 60; i++) {
+    waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 5);
+    waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 5);
     waves[9].addEnemy("EnemyOrc", 100, 1 / 2500, 5);
 }
 waves[9].enemySpawnSpeed = 600;
 
 //wave 11
 for (var i = 0; i < 175; i++) {
-    waves[10].addEnemy("EnemyOrc", 150, 1 / 5000, 10);
+    waves[10].addEnemy("EnemyOrc", 150, 1 / 5000, 5); //ok
 }
 waves[10].enemySpawnSpeed = 300;
 
 //wave 12
-for (var i = 0; i < 200; i++) {
-    waves[11].addEnemy("EnemyOrc", 650, 1 / 10000, 10); //ok
-    waves[11].addEnemy("EnemyOrc", 150, 1 / 3750, 10);
+for (var i = 0; i < 100; i++) {
+    waves[11].addEnemy("EnemyOrc", 650, 1 / 10000, 5); //ok
+    waves[11].addEnemy("EnemyOrc", 150, 1 / 3750, 5);
 }
 waves[11].enemySpawnSpeed = 300;
 
 //wave 13
 for (var i = 0; i < 150; i++) {
-    waves[12].addEnemy("EnemyOrc", 550, 1 / 10000, 10); //ok
+    waves[12].addEnemy("EnemyOrc", 550, 1 / 10000, 5); //ok
 }
 waves[12].enemySpawnSpeed = 300;
 
 //wave 14
-for (var i = 0; i < 230; i++) {
-    waves[13].addEnemy("EnemyOrc", 1000, 1 / 10000, 15);
-    waves[13].addEnemy("EnemyOrc", 2500, 1 / 6000, 10);
-    waves[13].addEnemy("EnemyOrc", 4000, 1 / 6000, 10);
-    waves[13].addEnemy("EnemyOrc", 2000, 1 / 6000, 10);
+for (var i = 0; i < 40; i++) {
+    waves[13].addEnemy("EnemyOrc", 200, 1 / 10000, 15);
+    waves[13].addEnemy("EnemyOrc", 500, 1 / 6000, 10);
+    waves[13].addEnemy("EnemyOrc", 500, 1 / 6000, 10);
 }
 waves[13].enemySpawnSpeed = 550;
 
