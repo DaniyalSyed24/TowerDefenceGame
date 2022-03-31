@@ -2,7 +2,7 @@ let path;
 let turrets;
 let enemies;
 
-let badges = [];
+let badges = [0,0,0,0,0,0,0,0];
 
 
 var xhr = new XMLHttpRequest()
