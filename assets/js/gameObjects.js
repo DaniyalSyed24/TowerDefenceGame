@@ -35,7 +35,7 @@ let Enemy = new Phaser.Class({
 
         // if hp drops below 0 we deactivate this enemy
         if (this.hp <= 0) {
-            CURRENCY += this.reward;
+            CURRENCY += this.reward * currency_multiplier;
             //updateCurrency();
             this.scene.events.emit("updateCurrency");
             this.setActive(false);

@@ -2,29 +2,38 @@ let path;
 let turrets;
 let enemies;
 
-let badges = [];
+let badges = [0,0,0,0,0,0,0,0];
 
 
 var xhr = new XMLHttpRequest()
 xhr.onload = function () {
     var data = JSON.parse(this.responseText)
 
-    badges[0] = data[0];
-    badges[1] = data[1];
-    badges[2] = data[2];
-    badges[3] = data[3];
-    badges[4] = data[4];
-    badges[5] = data[5];
-    badges[6] = data[6];
-    badges[7] = data[7];  
+    badges[0] = data[0]; //Enterprise-grade AI
+    badges[1] = data[1]; //Enterprise Data Science
+    badges[2] = data[2]; //Threat intelligence and Hunting
+    badges[3] = data[3]; //Cloud for Enterprise
+    badges[4] = data[4]; //Improving Healthcare: AI
+    badges[5] = data[5]; //Improving Healthcare: Data Analytics and Data Science
+    badges[6] = data[6]; //Improving Healthcare: Cloud Computing
+    badges[7] = data[7]; //Journey to Cloud
 }
 xhr.open('GET', 'process/badges.php')
 xhr.send()
 
+let currency_multiplier = 1;
+if (badges[3] == 1) {
+    currency_multiplier = 2;
+}
+let damage_multiplier = 1;
+if (badges[2] == 1) {
+    damage_multiplier = 1.5;
+}
+
 let ENEMY_SPEED = 1 / 10000;
 let CURRENT_WAVE = 1;
 let LIVES = 100;
-let BULLET_DAMAGE = 50;
+let BULLET_DAMAGE = 50 * damage_multiplier;
 
 let CURRENCY = 200;
 
