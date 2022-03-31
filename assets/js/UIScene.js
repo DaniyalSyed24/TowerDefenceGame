@@ -26,22 +26,78 @@ let UIScene = Phaser.Class({
         var gbadge7 = this.add.image(750, 375, 'greyBadges', 'gbadge7');
         var gbadge8 = this.add.image(750, 425, 'greyBadges', 'gbadge8');
         var badge1 = this.add.image(675, 275, 'badgeSprites', '01').setInteractive();
-        var badge2 = this.add.image(675, 325, 'badgeSprites', '02');
-        var badge3 = this.add.image(675, 375, 'badgeSprites', '03');
-        var badge4 = this.add.image(675, 425, 'badgeSprites', '04');
-        var badge5 = this.add.image(750, 275, 'badgeSprites', '05');
-        var badge6 = this.add.image(750, 325, 'badgeSprites', '06');
-        var badge7 = this.add.image(750, 375, 'badgeSprites', '07');
-        var badge8 = this.add.image(750, 425, 'badgeSprites', '08');
+        var badge2 = this.add.image(675, 325, 'badgeSprites', '02').setInteractive();
+        var badge3 = this.add.image(675, 375, 'badgeSprites', '03').setInteractive();
+        var badge4 = this.add.image(675, 425, 'badgeSprites', '04').setInteractive();
+        var badge5 = this.add.image(750, 275, 'badgeSprites', '05').setInteractive();
+        var badge6 = this.add.image(750, 325, 'badgeSprites', '06').setInteractive();
+        var badge7 = this.add.image(750, 375, 'badgeSprites', '07').setInteractive();
+        var badge8 = this.add.image(750, 425, 'badgeSprites', '08').setInteractive();
 
         var badge1text = this.add.text(290, 260, "Enterprise-grade AI: +50 currency", {font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5})
-
+        var badge2text = this.add.text(225, 310, "Enterprise Data Science: +100 currency", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge3text = this.add.text(150, 360, "Threat Intelligence and Hunting: +50% damage", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge4text = this.add.text(55, 410, "Cloud for Enterprise: x2 rewards for destroying enemies", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge5text = this.add.text(345, 260, "Improving Healthcare - AI: +50 lives", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge6text = this.add.text(75, 310, "Improving Heathcare - Data Analytics: +10 lives on wave end", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge7text = this.add.text(180, 360, "Improving Healthcare - Cloud Computing: +50 lives", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        var badge8text = this.add.text(390, 410, "Journey to Cloud: +50 currency", { font: "24px Arial", fill: "#FFFFFF", stroke: "#000000", strokeThickness: 5 })
+        
         badge1text.setVisible(false);
         badge1.on("pointerover", function(pointer) {
             badge1text.setVisible(true);
         })
         badge1.on("pointerout", function (pointer) {
             badge1text.setVisible(false);
+        })
+        badge2text.setVisible(false);
+        badge2.on("pointerover", function (pointer) {
+            badge2text.setVisible(true);
+        })
+        badge2.on("pointerout", function (pointer) {
+            badge2text.setVisible(false);
+        })
+        badge3text.setVisible(false);
+        badge3.on("pointerover", function (pointer) {
+            badge3text.setVisible(true);
+        })
+        badge3.on("pointerout", function (pointer) {
+            badge3text.setVisible(false);
+        })
+        badge4text.setVisible(false);
+        badge4.on("pointerover", function (pointer) {
+            badge4text.setVisible(true);
+        })
+        badge4.on("pointerout", function (pointer) {
+            badge4text.setVisible(false);
+        })
+        badge5text.setVisible(false);
+        badge5.on("pointerover", function (pointer) {
+            badge5text.setVisible(true);
+        })
+        badge5.on("pointerout", function (pointer) {
+            badge5text.setVisible(false);
+        })
+        badge6text.setVisible(false);
+        badge6.on("pointerover", function (pointer) {
+            badge6text.setVisible(true);
+        })
+        badge6.on("pointerout", function (pointer) {
+            badge6text.setVisible(false);
+        })
+        badge7text.setVisible(false);
+        badge7.on("pointerover", function (pointer) {
+            badge7text.setVisible(true);
+        })
+        badge7.on("pointerout", function (pointer) {
+            badge7text.setVisible(false);
+        })
+        badge8text.setVisible(false);
+        badge8.on("pointerover", function (pointer) {
+            badge8text.setVisible(true);
+        })
+        badge8.on("pointerout", function (pointer) {
+            badge8text.setVisible(false);
         })
 
         gbadge1.setVisible(true);
