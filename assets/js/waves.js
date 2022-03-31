@@ -105,9 +105,9 @@ waves[11].enemySpawnSpeed = 300;
 
 //wave 13
 for (var i = 0; i < 150; i++) {
-    waves[0].addEnemy("EnemyOrc", 550, 1 / 10000, 10); //ok
+    waves[12].addEnemy("EnemyOrc", 550, 1 / 10000, 10); //ok
 }
-waves[0].enemySpawnSpeed = 300;
+waves[12].enemySpawnSpeed = 300;
 
 //wave 14
 for (var i = 0; i < 230; i++) {
