@@ -2,12 +2,22 @@ let path;
 let turrets;
 let enemies;
 
+let badges = [];
+
+
 var xhr = new XMLHttpRequest()
 xhr.onload = function () {
     var data = JSON.parse(this.responseText)
 
-    // You can now use the data
-    console.log(data)
+    badges[0] = data[0];
+    badges[1] = data[1];
+    badges[2] = data[2];
+    badges[3] = data[3];
+    badges[4] = data[4];
+    badges[5] = data[5];
+    badges[6] = data[6];
+    badges[7] = data[7];
+    
 }
 xhr.open('GET', 'process/badges.php')
 xhr.send()
