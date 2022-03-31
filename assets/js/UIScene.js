@@ -1,5 +1,5 @@
 let UIScene = Phaser.Class({
-    Extends: Phaser.Scene,
+    Extends: Phaser.Scene,   
     initialize:
         function UIScene() {
             Phaser.Scene.call(this, { key: "UIScene" });
@@ -11,9 +11,87 @@ let UIScene = Phaser.Class({
         },
     preload: function() {
         this.load.atlas('turretSprites', 'assets/media/turrets.png', 'assets/media/turretsheet.json');
+        this.load.atlas('badgeSprites', 'assets/media/badgesheet.png', 'assets/media/badgesheet.json');
+        this.load.atlas('greyBadges', 'assets/media/greybadgesheet.png', 'assets/media/greybadgesheet.json');
     },
     create: function () {
         console.log("test UI");
+
+        var gbadge1 = this.add.image(675, 275, 'greyBadges', 'gbadge1');
+        var gbadge2 = this.add.image(675, 325, 'greyBadges', 'gbadge2');
+        var gbadge3 = this.add.image(675, 375, 'greyBadges', 'gbadge3');
+        var gbadge4 = this.add.image(675, 425, 'greyBadges', 'gbadge4');
+        var gbadge5 = this.add.image(750, 275, 'greyBadges', 'gbadge5');
+        var gbadge6 = this.add.image(750, 325, 'greyBadges', 'gbadge6');
+        var gbadge7 = this.add.image(750, 375, 'greyBadges', 'gbadge7');
+        var gbadge8 = this.add.image(750, 425, 'greyBadges', 'gbadge8');
+        var badge1 = this.add.image(675, 275, 'badgeSprites', '01');
+        var badge2 = this.add.image(675, 325, 'badgeSprites', '02');
+        var badge3 = this.add.image(675, 375, 'badgeSprites', '03');
+        var badge4 = this.add.image(675, 425, 'badgeSprites', '04');
+        var badge5 = this.add.image(750, 275, 'badgeSprites', '05');
+        var badge6 = this.add.image(750, 325, 'badgeSprites', '06');
+        var badge7 = this.add.image(750, 375, 'badgeSprites', '07');
+        var badge8 = this.add.image(750, 425, 'badgeSprites', '08');
+
+        gbadge1.setVisible(true);
+        gbadge2.setVisible(true);
+        gbadge3.setVisible(true);
+        gbadge4.setVisible(true);
+        gbadge5.setVisible(true);
+        gbadge6.setVisible(true);
+        gbadge7.setVisible(true);
+        gbadge8.setVisible(true);
+
+        if (badges[0] == 1) {
+            badge1.setVisible(true);
+        } else {
+            badge1.setVisible(false);
+        }
+
+        if (badges[1] == 1) {
+            badge2.setVisible(true);
+        } else {
+            badge2.setVisible(false);
+        }
+
+        if (badges[2] == 1) {
+            badge3.setVisible(true);
+        } else {
+            badge3.setVisible(false);
+        }
+
+        if (badges[3] == 1) {
+            badge4.setVisible(true);
+        } else {
+            badge4.setVisible(false);
+        }
+
+        if (badges[4] == 1) {
+            badge5.setVisible(true);
+        } else {
+            badge5.setVisible(false);
+        }
+
+        if (badges[5] == 1) {
+            badge6.setVisible(true);
+        } else {
+            badge6.setVisible(false);
+        }
+
+        if (badges[6] == 1) {
+            badge7.setVisible(true);
+        } else {
+            badge7.setVisible(false);
+        }
+
+        if (badges[7] == 1) {
+            badge8.setVisible(true);
+        } else {
+            badge8.setVisible(false);
+        }
+        
+        
 
         //tower costs
         var turretCost = 100;
@@ -212,6 +290,7 @@ let UIScene = Phaser.Class({
             activeSelectedSprite.setVisible(false);
             turretCancelText.setVisible(false);
         })
+        
         var turretIcon = this.add.image(675, 175, "turretSprites", "turett1v1");
         turretIcon.setVisible(true);
         turretIcon.setInteractive({ useHandCursor: true });

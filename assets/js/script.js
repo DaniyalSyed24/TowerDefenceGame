@@ -17,7 +17,6 @@ xhr.onload = function () {
     badges[5] = data[5]; //Improving Healthcare: Data Analytics and Data Science
     badges[6] = data[6]; //Improving Healthcare: Cloud Computing
     badges[7] = data[7]; //Journey to Cloud
-    
 }
 xhr.open('GET', 'process/badges.php')
 xhr.send()
