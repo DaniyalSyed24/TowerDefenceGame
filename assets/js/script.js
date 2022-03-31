@@ -16,8 +16,7 @@ xhr.onload = function () {
     badges[4] = data[4];
     badges[5] = data[5];
     badges[6] = data[6];
-    badges[7] = data[7];
-    
+    badges[7] = data[7];  
 }
 xhr.open('GET', 'process/badges.php')
 xhr.send()
