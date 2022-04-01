@@ -174,6 +174,7 @@ let UIScene = Phaser.Class({
         retryButton.setVisible(false);
         retryButton.setInteractive({ useHandCursor: true });
         retryButton.on("pointerup", () => {
+            turretIcon.setInteractive({ useHandCursor: true });
             game.reset();
             gameOverText.setVisible(false);
             retryButton.setVisible(false);
@@ -415,6 +416,7 @@ let UIScene = Phaser.Class({
         }, this)
 
         game.events.on("gameOver", function () {
+            turretIcon.disableInteractive();
             gameOverText.setText("GAME OVER");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
@@ -519,6 +521,7 @@ let UIScene = Phaser.Class({
         }, this);
 
         game.events.on("gameWon", function () {
+            turretIcon.disableInteractive();
             gameOverText.setText("You win!");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
