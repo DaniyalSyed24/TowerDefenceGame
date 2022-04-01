@@ -59,7 +59,7 @@ let mainMenuScene = Phaser.Class({
             removeLogoutButton();
         }, 49, 10);
 
-        let buttonInstructions = new Button(screenCenterX, 550, 'I', this, () => {
+        let buttonInstructions = new Button(screenCenterX, 550, 'i', this, () => {
             this.scene.start('instructionScene')
 
             removeLogoutButton();
