@@ -82,7 +82,7 @@ for (var i = 0; i < 40; i++) {
 waves[8].enemySpawnSpeed = 500;
 
 //wave 10
-waves[9].addEnemy("EnemyOrc", 3000, 1 / 4000, 250); //should lose more health...
+waves[9].addEnemy("EnemyOrc", 3000, 1 / 40000, 250); //should lose more health...
 for (var i = 0; i < 50; i++) {
     waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 10);
     waves[9].addEnemy("EnemyOrc", 200, 1 / 8000, 10);
