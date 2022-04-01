@@ -174,6 +174,7 @@ let UIScene = Phaser.Class({
         retryButton.setVisible(false);
         retryButton.setInteractive({ useHandCursor: true });
         retryButton.on("pointerup", () => {
+            turretIcon.setInteractive({ useHandCursor: true });
             game.reset();
             gameOverText.setVisible(false);
             retryButton.setVisible(false);
@@ -415,6 +416,29 @@ let UIScene = Phaser.Class({
         }, this)
 
         game.events.on("gameOver", function () {
+            turretIcon.disableInteractive();
+
+            towerText.setVisible(false);
+            sellButton.setVisible(false);
+            closeButton.setVisible(false);
+            upgradeFireRate.setVisible(false);
+            upgradeRange.setVisible(false);
+
+            targetingHeader.setVisible(false);
+            targetingFirst.setVisible(false);
+            targetingLast.setVisible(false);
+            targetingStrong.setVisible(false);
+            targetingWeak.setVisible(false);
+
+            game.turretSelected = false;
+            errorNoMoney.setVisible(false);
+            turretName.setVisible(false);
+            costText.setVisible(false);
+            turretCancelText.setVisible(false);
+            activeSelectedSprite.setVisible(false);
+            turretOutline.setVisible(false);
+
+
             gameOverText.setText("GAME OVER");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
@@ -519,6 +543,28 @@ let UIScene = Phaser.Class({
         }, this);
 
         game.events.on("gameWon", function () {
+            turretIcon.disableInteractive();
+
+            towerText.setVisible(false);
+            sellButton.setVisible(false);
+            closeButton.setVisible(false);
+            upgradeFireRate.setVisible(false);
+            upgradeRange.setVisible(false);
+
+            targetingHeader.setVisible(false);
+            targetingFirst.setVisible(false);
+            targetingLast.setVisible(false);
+            targetingStrong.setVisible(false);
+            targetingWeak.setVisible(false);
+
+            game.turretSelected = false;
+            errorNoMoney.setVisible(false);
+            turretName.setVisible(false);
+            costText.setVisible(false);
+            turretCancelText.setVisible(false);
+            activeSelectedSprite.setVisible(false);
+            turretOutline.setVisible(false);
+
             gameOverText.setText("You win!");
             gameOverText.setVisible(true);
             retryButton.setVisible(true);
