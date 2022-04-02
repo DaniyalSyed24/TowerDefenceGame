@@ -13,6 +13,7 @@ PSP assessment for IBM
 3. Place the project files into ```wamp64/www```
 
 The project can be run by visiting ```localhost/tower-defence-game/``` using a browser of your choice.
+QUICK NOTE: running wamp64 may result in some error messages. This is fine, the project will still run.
 
 # Database setup
 1. Go to ```localhost/phpmyadmin```
